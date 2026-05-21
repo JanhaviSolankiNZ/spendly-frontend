@@ -1,10 +1,12 @@
-import './App.css'
+import './App.css';
+import MainLayout from './layouts/MainLayout';
+import { BrowserRouter } from "react-router-dom"
 
 function App() {
   return (
-    <>
-    App
-    </>
+    <BrowserRouter>
+      <MainLayout />
+    </BrowserRouter>
   )
 }
 
