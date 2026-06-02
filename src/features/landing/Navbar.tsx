@@ -16,10 +16,10 @@ const Navbar = () => {
                     <a href="/#features">Features</a>
                 </NavigationMenuItem>
                 <Button variant="ghost" className="border border-border bg-foreground/10 hover:bg-foreground/20 cursor-pointer">
-                    Sign in
+                   <Link to="/signin">Sign in</Link>
                 </Button>
                 <Button className="bg-primary text-primary-foreground hover:bg-primary/90 cursor-pointer">
-                    Get started for free
+                  <Link to="/signup">Get started for free</Link>
                 </Button>
             </NavigationMenuList>
         </NavigationMenu>

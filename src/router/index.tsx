@@ -5,23 +5,23 @@ import SignUpPage from "@/pages/signup/SignUpPage";
 import LandingPage from "@/pages/landing/LandingPage";
 
 const router = createBrowserRouter([
-    {
-        element: <AuthLayout/>,
-        children: [
-            {
-                path: "/signin",
-                element: <SignInPage/>
-            },
-            {
-                path: "/signup",
-                element: <SignUpPage/>
-            }
-        ]
-    },
-    {
-        path: "/",
-        element: <LandingPage/>
-    }
+  {
+    element: <AuthLayout />,
+    children: [
+      {
+        path: "/signin",
+        element: <SignInPage />,
+      },
+      {
+        path: "/signup",
+        element: <SignUpPage />,
+      },
+    ],
+  },
+  {
+    path: "/",
+    element: <LandingPage />,
+  },
 ]);
 
 export default router;

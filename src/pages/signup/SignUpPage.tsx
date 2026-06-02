@@ -1,5 +1,6 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Eye } from "lucide-react";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -8,9 +9,29 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuthStore } from "@/store/authStore";
+import { useForm } from "react-hook-form";
+import {zodResolver} from "@hookform/resolvers/zod"
+import { signUpSchema } from "@/utils/schema";
+import type{ SignUpData } from "@/utils/schema";
 
 const SignUpPage = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+  const {register: registerUser, loading} = useAuthStore();
+
+  const {register, handleSubmit, formState: {errors}, setError} = useForm<SignUpData>({resolver: zodResolver(signUpSchema)});
+
+  const onSubmit = async (values: SignUpData) => {
+    const success = await registerUser(values.email, values.password, values.username);
+    if(success){
+      navigate("/signin")
+    }else{
+      setError("root",  { message: "Could not create account. Please try again." })
+    }
+  }
+
   return (
     <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center">
       <Card className="w-full max-w-sm m-auto  border border-card-foreground">
@@ -53,25 +74,34 @@ const SignUpPage = () => {
             <p className="text-xs text-secondary px-2">Or</p>
             <Separator className="flex-1" />
           </div>
-          <form className="space-y-4">
+          {errors.root && (
+            <div className="text-xs text-red-400 bg-red-500/10 border border-red-500/20 rounded-lg px-3 py-2">
+              {errors.root.message}
+            </div>)}
+          <form className="space-y-4" onSubmit={handleSubmit(onSubmit)} noValidate>
             <div className="space-y-2">
-              <Label className="text-foreground">Full name</Label>
-              <Input type="email" placeholder="Enter your full name" />
+              <Label className="text-foreground">Username</Label>
+              <Input type="email" placeholder="Enter your username" {...register("username")} />
+              {errors.username && (<p>{errors.username.message}</p>)}
             </div>
             <div className="space-y-2">
               <Label className="text-foreground">Email address</Label>
-              <Input type="email" placeholder="Enter your email" />
+              <Input type="email" placeholder="Enter your email" {...register("email")} />
+              {errors.email && (<p>{errors.email.message}</p>)}
             </div>
             <div className="space-y-2">
                 <Label className="text-foreground">Password</Label>
                 <div className="relative">
-                <Input type="password" placeholder="Enter your password" />
-                <Button className="absolute right-1 top-1 cursor-pointer">
-                  <Eye />
+                <Input type={showPassword? "text": "password"} placeholder="Enter your password" {...register("password")} />
+                {errors.password && (<p>{errors.password.message}</p>)}
+                <Button className="absolute right-1 top-1 cursor-pointer" onClick={() => setShowPassword(!showPassword)}>
+                  {showPassword ? <EyeOff size={16}/> : <Eye size={16} />}
                 </Button>
               </div>
             </div>
-            <Button className="w-full py-5 px-2" type="submit">Create account</Button>
+            <Button className="w-full py-5 px-2 cursor-pointer" type="submit" disabled={loading}>
+              {loading ? <><Loader2 size={16} className="animate-spin" /> Creating account...</>: "Create account"}
+            </Button>
           </form>
           <p className="text-secondary text-center">Already have an account? <Link to="/signup" className="text-primary">Sign in</Link></p>
         </CardContent>
