@@ -5,6 +5,7 @@ import SignUpPage from "@/pages/signup/SignUpPage";
 import LandingPage from "@/pages/landing/LandingPage";
 import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
+import MainLayout from "@/layouts/MainLayout";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,15 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    element: <PrivateRoute/>,
+    children: [
+      {
+        path: "/dashboard",
+        element: <MainLayout/>
+      }
+    ]
+  }
 ]);
 
 export default router;
