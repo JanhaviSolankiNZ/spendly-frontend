@@ -9,7 +9,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuthStore } from "@/store/authStore";
 import { useForm } from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod"
@@ -21,11 +21,12 @@ import { GoogleIcon } from "@/assets/GoogleIcon";
 const SignInPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const { login: loginUser, loading } = useAuthStore();
 
   const {register, handleSubmit, formState: {errors}, setError} = useForm<SignInData>({resolver: zodResolver(signInSchema)})
 
-  const from = (location.state as any)?.from?.pathname || "/dashboard"; // redirect back to where trying to go, default dashboard
+  const from = (location.state as { from?: { pathname?: string } })?.from?.pathname || "/dashboard"; // redirect back to where trying to go, default dashboard
 
   const onSubmit = async (values: SignInData) => {
     const success = await loginUser(values.email, values.password);
