@@ -39,10 +39,6 @@ const SignUpPage = () => {
         <div className="w-full max-w-sm">
         <Card className="border-0 sm:border sm:border-card-foreground rounded-xl shadow-none sm:shadow-sm">
           <CardHeader className="text-center space-y-3 pb-0 px-4 sm:px-6">
-            <div className="flex flex-col items-center gap-2">
-              <SpendlyLogo className="w-6 h-6 sm:w-8 sm:h-8" />
-              <span className="text-xs text-secondary font-medium tracking-wide">Spendly</span>
-            </div>
             <h1 className="text-2xl font-semibold text-muted-foreground">Welcome back</h1>
             <p className="text-foreground text-sm mt-1">Sign in to your account</p>
           </CardHeader>
@@ -86,7 +82,7 @@ const SignUpPage = () => {
                 </div>
                 <div className="relative">
                   <Input type={showPassword ? "text": "password"} placeholder="Enter your password" {...register("password")} className="h-11 text-base sm:text-sm" />
-                  <Button className="absolute right-3 top-1.5 cursor-pointer text-secondary hover:text-muted-foreground transition-colors p-2 -mr-1" onClick={() => setShowPassword(!showPassword)}>
+                  <Button type="button" className="absolute right-3 top-1.5 cursor-pointer text-secondary hover:text-muted-foreground transition-colors p-2 -mr-1" onClick={() => setShowPassword(!showPassword)}>
                    {showPassword ? <EyeOff/> : <Eye />}
                   </Button>
                 </div>
