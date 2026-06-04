@@ -15,7 +15,6 @@ import { useForm } from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod"
 import { signUpSchema } from "@/utils/schema";
 import type{ SignUpData } from "@/utils/schema";
-import { SpendlyLogo } from "@/assets/SpendlyLogo";
 import { GoogleIcon } from "@/assets/GoogleIcon";
 
 const SignUpPage = () => {
