@@ -89,7 +89,7 @@ const DesktopSidebar = () => {
           collapsed && "justify-center px-0",
         )}
       >
-        <SpendlyLogo size={32} />
+        <SpendlyLogo className="w-8 h-8" />
         {!collapsed && (
           <span className="text-[18px] font-semibold text-muted-foreground tracking-tight">
             Spendly
@@ -191,7 +191,7 @@ const MobileDrawer = ({
         {/* drawer header */}
         <div className="flex items-center justify-between px-4 h-14 border-b border-border shrink-0">
           <div className="flex items-center gap-2">
-            <SpendlyLogo size={32} />
+            <SpendlyLogo className="w-8 h-8"/>
             <span className="text-sm font-semibold text-muted-foreground">
               Spendly
             </span>
@@ -247,7 +247,7 @@ const MobileTopBar = ({ onMenuOpen }: { onMenuOpen: () => void }) => {
   return (
     <div className="lg:hidden flex items-center justify-between px-4 h-14 bg-card border-b border-border shrink-0">
       <div className="flex items-center gap-2">
-        <SpendlyLogo size={32} />
+        <SpendlyLogo className="w-8 h-8"/>
         <span className="text-sm font-semibold text-muted-foreground">
           Spendly
         </span>
