@@ -7,6 +7,9 @@ const api = axios.create({
     withCredentials: true
 });
 
+let isRefreshing = false;
+let refreshPromise: Promise<string> | null = null;
+
 api.interceptors.request.use((config) => {
     const token = localStorage.getItem("accessToken");
     if(token){
@@ -20,15 +23,27 @@ api.interceptors.response.use((reponse) => reponse, async (error) => {
     if(error.response?.status === 401 && !ogRequest._retry){
         ogRequest._retry = true;
         try{
-            const { data } = await axios.post(`${BASE_URL}/auth/refreshAccessToken`, {}, {withCredentials: true});
-            const newToken = data.data.accessToken;
-            localStorage.setItem("accessToken", newToken);
+            if(!isRefreshing){
+                isRefreshing = true;
+                refreshPromise = axios.post(`${BASE_URL}/auth/refreshAccessToken`, {}, {withCredentials: true})
+                .then((response) => {
+                    const newToken = response.data.data.accessToken;
+                    localStorage.setItem("accessToken", newToken);
+                    return newToken;
+                })
+                .finally(() => {
+                    isRefreshing = false;
+                })
+            }
+            const newToken = await refreshPromise;
+
             ogRequest.headers["Authorization"] = `Bearer ${newToken}`;
-            return api(ogRequest)
+            return api(ogRequest);
         }catch{
             localStorage.removeItem("accessToken");
             localStorage.removeItem("user");
-            window.location.href = "/signin"
+            window.location.href = "/signin";
+            return Promise.reject(error);
         }
     }
     return Promise.reject(error);
