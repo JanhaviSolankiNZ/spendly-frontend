@@ -23,6 +23,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { expenseService } from "@/services/expenseService";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const KpiCard = ({
   label,
@@ -124,6 +126,7 @@ const ExpensePage = () => {
   });
 
   const debounceRef = useRef<number | null>(null);
+  const navigate = useNavigate();
 
   const debounceSearch = (search: string) => {
     setSearchQ(search);
@@ -198,11 +201,20 @@ const updatePage = (page: number) => {
 const { month, category, page} = filters;
 
 const handleDelete = async (id: string) => {
-
+  if(!confirm("Delete this expense")) return;
+  setDeleting(id);
+  try{
+    await expenseService.delete(id);
+    toast.success("Expense deleted");
+  }catch{
+    toast.error("Failed to delete");
+  }finally{
+    setDeleting(null);
+  }
 };
 
 const handleExport = async () => {
-
+  //
 };
 
 const vsText = summary !== null ? `${summary?.vsLastMonth > 0 ? "+": ""}${summary?.vsLastMonth}% vs last month`: "_";
@@ -212,11 +224,11 @@ const vsText = summary !== null ? `${summary?.vsLastMonth > 0 ? "+": ""}${summar
       title="Expenses"
       action={
         <div className="flex gap-2">
-          <Button className="hidden sm:flex border-border text-foreground bg-card-foreground cursor-pointer gap-1.5">
+          <Button className="hidden sm:flex border-border text-foreground bg-card-foreground cursor-pointer gap-1.5" onClick={handleExport}>
             <Download size={14} />
             <span className="hidden md:inline">Export CSV</span>
           </Button>
-          <Button className="cursor-pointer gap-1.5 ">
+          <Button className="cursor-pointer gap-1.5 " onClick={() => navigate("/expenses/add")}>
             <Plus size={14} />
             <span className="hidden sm:inline">Add</span>
             <span className="hidden sm:inline">Expense</span>
@@ -369,8 +381,8 @@ const vsText = summary !== null ? `${summary?.vsLastMonth > 0 ? "+": ""}${summar
                   <ExpenseTableRow
                     key={exp._id}
                     deleting={null}
-                    onEdit={() => {}}
-                    onDelete={() => {}}
+                    onEdit={() => navigate(`/expense/${exp._id}/edit`)}
+                    onDelete={() => handleDelete(exp._id)}
                     exp={exp}
                   />
                 ))}
@@ -384,8 +396,8 @@ const vsText = summary !== null ? `${summary?.vsLastMonth > 0 ? "+": ""}${summar
                 key={exp._id}
                 exp={exp}
                 deleting={deleting}
-                onEdit={() => {}}
-                onDelete={() => {}}
+                onEdit={() => navigate(`/expense/${exp._id}/edit`)}
+                onDelete={() => handleDelete(exp._id)}
               />
             ))}
           </div>
@@ -557,10 +569,13 @@ const ExpenseTableRow = ({
           <button
             className="p-1.5 rounded-md text-secondary hover:text-muted-foreground hover:bg-card-foreground transition-colors cursor-pointer"
             title="Edit"
+            onClick={onEdit}
           >
             <Pencil size={14} />
           </button>
           <button
+            onClick={onDelete}
+            disabled={deleting === exp._id}
             className="p-1.5 rounded-md text-secondary hover:text-red-400 hover:bg-red-500/10 transition-colors cursor-pointer"
             title="Delete"
           >
