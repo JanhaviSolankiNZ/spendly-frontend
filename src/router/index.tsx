@@ -6,6 +6,8 @@ import LandingPage from "@/pages/landing/LandingPage";
 import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
 import MainLayout from "@/layouts/MainLayout";
+import ExpensePage from "@/pages/expense/ExpensePage";
+import DashboardPage from "@/pages/dashboard/DashboardPage";
 
 const router = createBrowserRouter([
   {
@@ -31,9 +33,19 @@ const router = createBrowserRouter([
     element: <PrivateRoute/>,
     children: [
       {
+        element: <MainLayout/>,
+        children: [
+           {
         path: "/dashboard",
-        element: <MainLayout/>
+        element: <DashboardPage/>
+      },
+       {
+        path: "/expenses",
+        element: <ExpensePage/>
       }
+        ]
+      },
+
     ]
   }
 ]);

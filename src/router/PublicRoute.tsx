@@ -6,7 +6,7 @@ const PublicRoute = () => {
   const user = useAuthStore((s) => s.user);
 
   if (user) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/dashboard" replace />;
   }
 
   return <Outlet />;

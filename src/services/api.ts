@@ -8,7 +8,7 @@ const api = axios.create({
 });
 
 api.interceptors.request.use((config) => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("accessToken");
     if(token){
         config.headers["Authorization"] = `Bearer ${token}`;
     }
@@ -20,13 +20,13 @@ api.interceptors.response.use((reponse) => reponse, async (error) => {
     if(error.response?.status === 401 && !ogRequest._retry){
         ogRequest._retry = true;
         try{
-            const { data } = await axios.post(`${BASE_URL}/auth/refresh`, {}, {withCredentials: true});
-            const newToken = data.data.actionToken;
-            localStorage.set("actionToken", newToken);
+            const { data } = await axios.post(`${BASE_URL}/auth/refreshAccessToken`, {}, {withCredentials: true});
+            const newToken = data.data.accessToken;
+            localStorage.setItem("accessToken", newToken);
             ogRequest.headers["Authorization"] = `Bearer ${newToken}`;
             return api(ogRequest)
         }catch{
-            localStorage.removeItem("actionToken");
+            localStorage.removeItem("accessToken");
             localStorage.removeItem("user");
             window.location.href = "/signin"
         }

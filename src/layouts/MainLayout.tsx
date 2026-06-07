@@ -32,6 +32,25 @@ const NAV_ACCOUNT = [
   { label: "Settings", path: "/settings", Icon: Settings },
 ];
 
+export const PageShell = ({title, subtitle, action, children}: {title?: string; subtitle?: string; action?: React.ReactNode; children: React.ReactNode}) => {
+  return (
+    <div className="min-h-full p-4 sm:p-6 lg:p-8">
+      {(title || action) && (
+        <div className="flex items-center justify-between gap-3 mb-4 sm:mb-6">
+          <div className="min-w-0">
+            {title  && <h1 className="text-lg sm:text-xl font-semibold text-muted-foreground leading-tight">{title}</h1>}
+             {subtitle  && <p className="text-xs sm:text-sm text-secondary mt-0.5">{subtitle}</p>}
+            </div>
+            {action && <div className="flex items-center gap-2 shrink-0">
+              {action}
+              </div>}
+          </div>
+      )}
+      {children}
+    </div>
+  )
+}
+
 const NavItem = ({
   collapsed,
   label,
@@ -265,7 +284,7 @@ const MobileTopBar = ({ onMenuOpen }: { onMenuOpen: () => void }) => {
 const MainLayout = () => {
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
   return (
-    <>
+    <div className="flex h-screen bg-background overflow-hidden">
       <DesktopSidebar />
       <MobileDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} />
       <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
@@ -274,7 +293,7 @@ const MainLayout = () => {
           <Outlet />
         </main>
       </div>
-    </>
+    </div>
   );
 };
 
