@@ -1,6 +1,6 @@
-import Navbar from "../../features/landing/Navbar"
-import Hero from "../../features/landing/Hero"
-import Features from "../../features/landing/Features"
+import Navbar from "@/features/landing/components/Navbar"
+import Hero from "@/features/landing/components/Hero"
+import Features from "@/features/landing/components/Features"
 
 const LandingPage = () => {
     return (

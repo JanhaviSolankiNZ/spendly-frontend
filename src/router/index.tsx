@@ -1,13 +1,13 @@
 import { createBrowserRouter } from "react-router-dom";
 import AuthLayout from "@/layouts/AuthLayout";
-import SignInPage from "@/pages/signin/SignInPage";
-import SignUpPage from "@/pages/signup/SignUpPage";
-import LandingPage from "@/pages/landing/LandingPage";
+import SignInPage from "@/features/auth/pages/signin/SignInPage";
+import SignUpPage from "@/features/auth/pages/signup/SignUpPage";
+import LandingPage from "@/features/landing/pages/LandingPage";
 import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
 import MainLayout from "@/layouts/MainLayout";
-import ExpensePage from "@/pages/expense/ExpensePage";
-import DashboardPage from "@/pages/dashboard/DashboardPage";
+import ExpensePage from "@/features/expense/pages/ExpensePage";
+import DashboardPage from "@/features/dashboard/pages/DashboardPage";
 
 const router = createBrowserRouter([
   {

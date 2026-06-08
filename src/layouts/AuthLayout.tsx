@@ -1,5 +1,5 @@
 import {Outlet} from "react-router-dom";
-import Navbar from "@/features/auth/Navbar";
+import Navbar from "@/features/auth/components/Navbar";
 
 
 

@@ -305,7 +305,7 @@ const vsText = summary !== null ? `${summary?.vsLastMonth > 0 ? "+": ""}${summar
           </button>
         </div>
         {/* mobile filter panel */}
-        <div className="sm:hidden mt-2 p-3 bg-card border border-border rounded-xl space-y-3">
+        {filterOpen && (<div className="sm:hidden mt-2 p-3 bg-card border border-border rounded-xl space-y-3">
           <div className="flex items-center justify-between mb-1">
             <span className="text-xs font-medium text-muted-foreground">
               Filters
@@ -333,6 +333,7 @@ const vsText = summary !== null ? `${summary?.vsLastMonth > 0 ? "+": ""}${summar
             <div className="flex flex-wrap gap-1.5">
               {["", ...EXPENSE_CATEGORIES].map((cat) => (
                 <button
+                  onClick={() => updateCategory(cat)}
                   className={cn(
                     "text-xs px-2.5 py-1 rounded-full border transition-all cursor-pointer",
                     category === cat
@@ -345,7 +346,7 @@ const vsText = summary !== null ? `${summary?.vsLastMonth > 0 ? "+": ""}${summar
               ))}
             </div>
           </div>
-        </div>
+        </div>)}
       </div>
 
       {loading ? (
