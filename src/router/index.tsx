@@ -8,6 +8,7 @@ import PublicRoute from "./PublicRoute";
 import MainLayout from "@/layouts/MainLayout";
 import ExpensePage from "@/features/expense/pages/ExpensePage";
 import DashboardPage from "@/features/dashboard/pages/DashboardPage";
+import AddExpensePage from "@/features/expense/pages/AddExpensePage";
 
 const router = createBrowserRouter([
   {
@@ -30,24 +31,31 @@ const router = createBrowserRouter([
     ],
   },
   {
-    element: <PrivateRoute/>,
+    element: <PrivateRoute />,
     children: [
       {
-        element: <MainLayout/>,
+        element: <MainLayout />,
         children: [
-           {
-        path: "/dashboard",
-        element: <DashboardPage/>
+          {
+            path: "/dashboard",
+            element: <DashboardPage />,
+          },
+          {
+            path: "/expenses/:id",
+            element: <AddExpensePage/>
+          },
+          {
+            path: "/expenses/add",
+            element: <AddExpensePage/>
+          },
+          {
+            path: "/expenses",
+            element: <ExpensePage />,
+          }
+        ],
       },
-       {
-        path: "/expenses",
-        element: <ExpensePage/>
-      }
-        ]
-      },
-
-    ]
-  }
+    ],
+  },
 ]);
 
 export default router;

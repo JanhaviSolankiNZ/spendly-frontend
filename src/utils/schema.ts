@@ -1,3 +1,4 @@
+import { EXPENSE_CATEGORIES } from "@/types";
 import { z } from "zod";
 export const signInSchema = z.object({
     email: z.string().min(1, "Email is required").email("Invalid email address"),
@@ -14,3 +15,17 @@ export const signUpSchema = z.object({
 });
 
 export type SignUpData = z.infer<typeof signUpSchema>;
+
+
+export const expenseSchema = z.object({
+    description: z.string().min(1, "Description is required")
+        .max(200, "Max 200 characters"),
+    amount: z.coerce
+        .number({error: "Enter a valid amount"})
+        .positive("Amount must be greater than 0"),
+    date: z.string().min(1, "Date is required"),
+    category: z.enum(EXPENSE_CATEGORIES, "Enter a valid category"),
+    notes: z.string().max(500, "Max 500 characters").optional()
+});
+
+export type ExpenseData = z.infer<typeof expenseSchema>;

@@ -14,6 +14,6 @@ interface RegisterPayload{
 export const authService = {
     login: (payload: LoginPayload) => api.post("/auth/login", payload),
     register: (payload: RegisterPayload) => api.post("/auth/register", payload),
-    logout: () => api.get("/auth/logout"),
+    logout: () => api.post("/auth/logout"),
     refresh: () => api.post("/auth/refresh")
 }

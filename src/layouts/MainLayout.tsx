@@ -8,7 +8,6 @@ import {
   Receipt,
   ChartPie,
   PlusCircle,
-  Wallet,
   Bell,
   Settings,
   LogOut,
@@ -24,7 +23,7 @@ const NAV_MAIN = [
   { label: "Expenses", path: "/expenses", Icon: Receipt },
   { label: "Analytics", path: "/analytics", Icon: ChartPie },
   { label: "Add income", path: "/income/add", Icon: PlusCircle },
-  { label: "Budgets", path: "/budgets", Icon: Wallet },
+  // { label: "Budgets", path: "/budgets", Icon: Wallet },
 ];
 
 const NAV_ACCOUNT = [
