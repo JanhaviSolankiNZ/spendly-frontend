@@ -10,6 +10,7 @@ import ExpensePage from "@/features/expense/pages/ExpensePage";
 import DashboardPage from "@/features/dashboard/pages/DashboardPage";
 import AddExpensePage from "@/features/expense/pages/AddExpensePage";
 import IncomesPage from "@/features/income/pages/IncomesPage";
+import AnalyticsPage from "@/features/analytics/pages/AnalyticsPage";
 
 const router = createBrowserRouter([
   {
@@ -56,6 +57,10 @@ const router = createBrowserRouter([
           {
             path: "/incomes",
             element: <IncomesPage />,
+          },
+          {
+            path: "/analytics",
+            element: <AnalyticsPage/>
           }
         ],
       },

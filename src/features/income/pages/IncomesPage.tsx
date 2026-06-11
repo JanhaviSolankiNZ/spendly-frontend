@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { incomeSchema, type IncomeData } from "@/utils/schema";
 import IncomeItem from "../components/IncomeItem";
-import { INCOME_TYPES, type Income } from "@/types";
+import { INCOME_TYPES, type Income, type IncomeSummary } from "@/types";
 import { useForm, type Resolver } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { incomeService } from "@/services/incomeService";
@@ -17,7 +17,7 @@ const currentMonth = () => new Date().toISOString().slice(0, 7);
 
 const IncomesPage = () => {
     const [incomes,     setIncomes]     = useState<Income[]>([]);
-    const [summary,     setSummary]     = useState<any>(null);
+    const [summary,     setSummary]     = useState<IncomeSummary | null>(null);
     const [month,       setMonth]       = useState(currentMonth());
     const [loadingList, setLoadingList] = useState(false);
 
@@ -202,7 +202,7 @@ const fetchHistory = useCallback(async () => {
                    {/* breakdown by type */}
                     {summary.byType.length > 0 && (
                       <div className="flex flex-wrap gap-4 mt-3">
-                        {summary.byType.map((t: any) => (
+                        {summary.byType.map((t) => (
                           <div key={t.type}>
                             <p className="text-[10px] text-secondary">{t.type}</p>
                             <p className="text-sm font-medium text-muted-foreground">
