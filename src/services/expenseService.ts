@@ -7,5 +7,6 @@ export const expenseService = {
     getById: (id: string) => api.get(`/expenses/${id}`),
     create: (data:object) => api.post("/expenses", data),
     update: (id: string, data: object) => api.patch(`/expenses/${id}`, data),
-    aiClassifyCategory: (data: object) => api.post('/expenses/categorise', data)
+    aiClassifyCategory: (data: object) => api.post('/expenses/categorise', data),
+    exportCSV: (params: {month: string}) => api.get(`/expenses/csv`, {params})
 }

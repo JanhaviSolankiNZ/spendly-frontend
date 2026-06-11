@@ -22,7 +22,7 @@ const NAV_MAIN = [
   { label: "Dashboard", path: "/dashboard", Icon: LayoutDashboard },
   { label: "Expenses", path: "/expenses", Icon: Receipt },
   { label: "Analytics", path: "/analytics", Icon: ChartPie },
-  { label: "Add income", path: "/income/add", Icon: PlusCircle },
+  { label: "Add income", path: "/incomes", Icon: PlusCircle },
   // { label: "Budgets", path: "/budgets", Icon: Wallet },
 ];
 

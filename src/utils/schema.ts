@@ -29,3 +29,19 @@ export const expenseSchema = z.object({
 });
 
 export type ExpenseData = z.infer<typeof expenseSchema>;
+
+export const incomeSchema = z.object({
+  source: z
+    .string()
+    .min(1, "Source is required")
+    .max(200, "Max 200 characters"),
+  amount: z.coerce
+    .number({ error: "Enter a valid amount" })
+    .positive("Amount must be greater than 0"),
+  date:               z.string().min(1, "Date is required"),
+  incomeType:         z.string().default("Salary"),
+  recurrenceInterval: z.string().default("One-time"),
+  notes:              z.string().max(500).optional(),
+});
+
+export type IncomeData = z.infer<typeof incomeSchema>;

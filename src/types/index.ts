@@ -48,3 +48,18 @@ export const CAT_SHORT: Record<string, string> = {
   "Social & Family":      "Social",
   "Miscellaneous":        "Misc",
 };
+
+
+export interface Income{
+  _id:                string;
+  source:             string;
+  amount:             number;
+  date:               string;
+  incomeType:         string;
+  notes?:             string;
+}
+
+export const INCOME_TYPES = [
+  "Salary", "Freelance", "Investment",
+  "Rental", "Business", "Other",
+] as const;

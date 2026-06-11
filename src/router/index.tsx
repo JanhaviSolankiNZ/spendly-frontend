@@ -9,6 +9,7 @@ import MainLayout from "@/layouts/MainLayout";
 import ExpensePage from "@/features/expense/pages/ExpensePage";
 import DashboardPage from "@/features/dashboard/pages/DashboardPage";
 import AddExpensePage from "@/features/expense/pages/AddExpensePage";
+import IncomesPage from "@/features/income/pages/IncomesPage";
 
 const router = createBrowserRouter([
   {
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
           {
             path: "/expenses",
             element: <ExpensePage />,
+          },
+          {
+            path: "/incomes",
+            element: <IncomesPage />,
           }
         ],
       },

@@ -38,7 +38,7 @@ const ExpensePage = () => {
   const [filterOpen, setFilterOpen] = useState(false);
   const [filters, setFilters] = useState({
     search:"",
-    month: "2024-12",
+    month: currentMonth(),
     category: "",
     page:1
   });
@@ -102,7 +102,6 @@ const updatePage = (page: number) => {
 
         expenseService.summary(filters.month),
       ]);
-        console.log("#summary",sumRes)
       setExpenses(expRes.data.data.expenses);
       setPagination(expRes.data.data.pagination);
       setSummary(sumRes.data.data);
@@ -131,7 +130,16 @@ const handleDelete = async (id: string) => {
 };
 
 const handleExport = async () => {
-  //
+  try {
+      const res = await expenseService.exportCSV({month});
+      const url = URL.createObjectURL(new Blob([res.data]));
+      const a   = document.createElement("a");
+      a.href = url; a.download = `expenses-${month}.csv`; a.click();
+      URL.revokeObjectURL(url);
+      toast.success("CSV downloaded");
+    } catch {
+      toast.error("Export failed");
+    }
 };
 
 const vsText = summary !== null ? `${summary?.vsLastMonth > 0 ? "+": ""}${summary?.vsLastMonth}% vs last month`: "_";
