@@ -1,5 +1,4 @@
 import { ArrowRight, type LucideIcon } from 'lucide-react';
-import React from 'react'
 
 const QuickAction = ({
   Icon, iconBg, iconColor, label, sub, onClick,
