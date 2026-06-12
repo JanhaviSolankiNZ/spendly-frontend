@@ -5,10 +5,10 @@ import { SpendlyLogo } from "@/assets/SpendlyLogo";
 
 const Navbar = () => {
     return (
-        <div className="flex items-center justify-between py-4 px-8 h-16">
-             <Link to="/" className="flex items-center gap-2">
+        <div className="flex items-center justify-between px-4 h-16 sm:px-8 h-14 sm:h-16">
+             <Link to="/" className="flex items-center gap-2 shrink-0">
                 <SpendlyLogo className="w-8 h-8"/>
-                <h1 className="text-base sm:text-xl font-bold text-muted-foreground">
+                <h1 className="leading-none text-base sm:text-xl font-bold text-muted-foreground">
                    Spendly
                 </h1>
             </Link>

@@ -33,19 +33,19 @@ const SignUpPage = () => {
     }
   }
 
-  return (    <div className="min-h-[calc(100vh-4rem)] flex flex-col">
-      <div className="flex-1 flex items-start sm:items-center justify-center px-4 pt-6 pb-8 sm:py-10">
+  return (    <div className="flex flex-col flex-1">
+      <div className="w-full flex justify-center px-4">
         <div className="w-full max-w-sm">
-        <Card className="border-0 sm:border sm:border-card-foreground rounded-xl shadow-none sm:shadow-sm">
-          <CardHeader className="text-center space-y-3 pb-0 px-4 sm:px-6">
-            <h1 className="text-2xl font-semibold text-muted-foreground">Welcome back</h1>
-            <p className="text-foreground text-sm mt-1">Sign in to your account</p>
+        <Card className="w-full max-w-sm max-h-[calc(100dvh-6rem)] overflow-auto">
+          <CardHeader className="text-center space-y-1 pb-0 px-4 sm:px-6">
+            <h1 className="text-xl font-semibold text-muted-foreground">Welcome back</h1>
+            <p className="text-foreground text-xs">Sign in to your account</p>
           </CardHeader>
-          <CardContent className="space-y-4 pt-5 px-4 sm:px-6">
+          <CardContent className="space-y-2 px-4 sm:px-6">
             <Button
               variant="outline"
               type="button"
-              className="w-full h-11 bg-card-foreground text-muted-foreground cursor-pointer gap-2 border-border hover:bg-card-foreground"
+              className="w-full h-9 bg-card-foreground text-muted-foreground cursor-pointer gap-2 border-border hover:bg-card-foreground"
             >
               <GoogleIcon/>
               Continue with Google
@@ -63,14 +63,14 @@ const SignUpPage = () => {
             <form className="space-y-4" onSubmit={handleSubmit(onSubmit)} noValidate>
               <div className="space-y-1.5">
                 <Label className="text-foreground text-sm">Username</Label>
-                <Input type="text" placeholder="Enter your username" {...register("username")} className="h-11 text-base sm:text-sm" />
+                <Input type="text" placeholder="Enter your username" {...register("username")} className="h-10 text-base sm:text-sm" />
                 {errors.username && (
                   <p className="text-xs text-red-400">{errors.username.message}</p>
                 )}
               </div>
                <div className="space-y-1.5">
                 <Label className="text-foreground text-sm">Email address</Label>
-                <Input type="email" placeholder="Enter your email" {...register("email")} className="h-11 text-base sm:text-sm" />
+                <Input type="email" placeholder="Enter your email" {...register("email")} className="h-10 text-base sm:text-sm" />
                 {errors.email && (
                   <p className="text-xs text-red-400">{errors.email.message}</p>
                 )}
@@ -80,7 +80,7 @@ const SignUpPage = () => {
                   <Label className="text-foreground text-sm">Password</Label>
                 </div>
                 <div className="relative">
-                  <Input type={showPassword ? "text": "password"} placeholder="Enter your password" {...register("password")} className="h-11 text-base sm:text-sm" />
+                  <Input type={showPassword ? "text": "password"} placeholder="Enter your password" {...register("password")} className="h-10 text-base sm:text-sm" />
                   <Button type="button" className="absolute right-3 top-1.5 cursor-pointer text-secondary hover:text-muted-foreground transition-colors p-2 -mr-1" onClick={() => setShowPassword(!showPassword)}>
                    {showPassword ? <EyeOff/> : <Eye />}
                   </Button>
@@ -89,7 +89,7 @@ const SignUpPage = () => {
                   <p className="text-xs text-red-400">{errors.password.message}</p>
                 )}
               </div>
-              <Button className="w-full h-11 font-medium cursor-pointer" type="submit">
+              <Button className="w-full h-10 font-medium cursor-pointer" type="submit">
                 {loading ? <><Loader2 size={16} className="animate-spin" /> Signing up...</> : "Sign up"}
               </Button>
             </form>
