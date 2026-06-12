@@ -9,23 +9,7 @@ import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 import { PageShell } from "@/layouts/MainLayout";
 import { ResponsiveContainer, Pie, Tooltip, PieChart, Cell, Cell as BarCell, BarChart, CartesianGrid, XAxis, YAxis, Bar, type TooltipProps } from "recharts";
 import type { NameType, ValueType } from "recharts/types/component/DefaultTooltipContent";
-
-const currentMonth = () => new Date().toISOString().slice(0, 7);
-
-const shiftMonth = (ym: string, delta: number) => {
-  const [y, m] = ym.split("-").map(Number);
-  const d = new Date(y, m - 1 + delta);
-  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
-};
-
-const formatMonthLabel = (ym: string) => {
-  const [y, m] = ym.split("-").map(Number);
-  return new Date(y, m - 1).toLocaleString("default", {
-    month: "long",
-    year:  "numeric",
-  });
-};
-
+import { currentMonth, shiftMonth, formatMonthLabel } from "@/utils/helpers";
 
 type CustomTooltipProps = TooltipProps<ValueType, NameType> & {
   active?:  boolean;

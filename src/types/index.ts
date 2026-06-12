@@ -111,3 +111,22 @@ export interface SixMonthTrend {
   average: number;
   trend: Trend[]
 }
+
+interface DashboardSummary {
+    totalIncome: number;
+  totalExpenses: number;
+  netSavings: number;
+  savingsPercent: number;
+  transactions: number;
+  dailyAverage: number;
+  daysInMonth: number;
+  expenseChange: number;
+  incomeChange: number;
+}
+
+export interface IDashboard {
+  summary: DashboardSummary;
+  recentExpenses:Expense[];
+  recentIncome: Income[];
+  dailyExpenses:  {day: string; total: number}[]
+}

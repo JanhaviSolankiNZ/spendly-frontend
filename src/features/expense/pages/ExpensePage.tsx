@@ -25,8 +25,7 @@ import KpiCard from "../components/KpiCard";
 import FilterRow from "../components/FilterRow";
 import ExpenseCard from "../components/ExpenseCard";
 import ExpenseTableRow from "../components/ExpenseTableRow";
-
-const currentMonth = () => new Date().toISOString().slice(0, 7);
+import { currentMonth } from "@/utils/helpers";
 
 const ExpensePage = () => {
   const [searchQ, setSearchQ] = useState("");

@@ -1,32 +1,15 @@
-import { Briefcase, Code, TrendingUp, Home, Building2, HelpCircle, Trash2, type LucideIcon } from "lucide-react";
+import { HelpCircle, Trash2 } from "lucide-react";
 import { type Income } from "@/types";
 import { format } from "date-fns"
-
-const TYPE_ICONS: Record<string, LucideIcon> = {
-  Salary:     Briefcase,
-  Freelance:  Code,
-  Investment: TrendingUp,
-  Rental:     Home,
-  Business:   Building2,
-  Other:      HelpCircle,
-};
-
-const TYPE_COLORS: Record<string, string> = {
-  Salary:     "#5DCAA5",
-  Freelance:  "#EF9F27",
-  Investment: "#85B7EB",
-  Rental:     "#AFA9EC",
-  Business:   "#F0997B",
-  Other:      "#6b7280",
-};
+import { INCOME_ICONS, INCOME_COLORS } from "@/utils/constants";
 
 const IncomeItem = ({
   income, onDelete,
 }: {
   income: Income; onDelete: (id: string) => void;
 })  => {
-  const Icon  = TYPE_ICONS[income.incomeType]  || HelpCircle;
-  const color = TYPE_COLORS[income.incomeType] || "#6b7280";
+  const Icon  = INCOME_ICONS[income.incomeType]  || HelpCircle;
+  const color = INCOME_COLORS[income.incomeType] || "#6b7280";
 
   return (
     <div className="flex items-center gap-3 py-3 border-b border-border last:border-0">

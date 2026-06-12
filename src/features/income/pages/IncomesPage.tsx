@@ -12,8 +12,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Briefcase, Loader2 } from "lucide-react";
-
-const currentMonth = () => new Date().toISOString().slice(0, 7);
+import { currentMonth } from "@/utils/helpers";
 
 const IncomesPage = () => {
     const [incomes,     setIncomes]     = useState<Income[]>([]);
