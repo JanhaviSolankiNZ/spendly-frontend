@@ -8,8 +8,8 @@ import {
   Receipt,
   ChartPie,
   PlusCircle,
-  Bell,
-  Settings,
+  // Bell,
+  // Settings,
   LogOut,
   Menu,
   ChevronRight,
@@ -26,10 +26,10 @@ const NAV_MAIN = [
   // { label: "Budgets", path: "/budgets", Icon: Wallet },
 ];
 
-const NAV_ACCOUNT = [
-  { label: "Alerts", path: "/alerts", Icon: Bell },
-  { label: "Settings", path: "/settings", Icon: Settings },
-];
+// const NAV_ACCOUNT = [
+//   { label: "Alerts", path: "/alerts", Icon: Bell },
+//   { label: "Settings", path: "/settings", Icon: Settings },
+// ];
 
 export const PageShell = ({title, subtitle, action, children}: {title?: string; subtitle?: string; action?: React.ReactNode; children: React.ReactNode}) => {
   return (
@@ -119,7 +119,7 @@ const DesktopSidebar = () => {
         {NAV_MAIN.map((item) => (
           <NavItem key={item.path} {...item} collapsed={collapsed} />
         ))}
-        {!collapsed ? (
+        {/* {!collapsed ? (
           <p className="pt-2 pb-1 px-4 text-[13px] font-medium text-secondary/50 uppercase tracking-widest">
             Account
           </p>
@@ -128,7 +128,7 @@ const DesktopSidebar = () => {
         )}
         {NAV_ACCOUNT.map((item) => (
           <NavItem key={item.path} {...item} collapsed={collapsed} />
-        ))}
+        ))} */}
       </nav>
       {/* user + logout */}
       <div className="border-t border-border px-2 py-3 space-y-1">
@@ -225,12 +225,12 @@ const MobileDrawer = ({
           {NAV_MAIN.map((item) => (
             <NavItem key={item.path} {...item} onClick={onClose} />
           ))}
-          <p className="pt-4 pb-1 px-4 text-[11px] font-bold text-secondary/50 uppercase tracking-widest">
+          {/* <p className="pt-4 pb-1 px-4 text-[11px] font-bold text-secondary/50 uppercase tracking-widest">
             Account
           </p>
           {NAV_ACCOUNT.map((item) => (
             <NavItem key={item.path} {...item} onClick={onClose} />
-          ))}
+          ))} */}
         </nav>
         <div className="border-t border-border px-3 py-3 space-y-1">
           <div className="flex items-center gap-2.5 px-3 py-2 rounded-lg">
