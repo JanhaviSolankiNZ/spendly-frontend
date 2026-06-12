@@ -1,16 +1,18 @@
 import { NavigationMenu, NavigationMenuItem, NavigationMenuList } from "@/components/ui/navigation-menu";
 import {Button} from "@/components/ui/button";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
+import { SpendlyLogo } from "@/assets/SpendlyLogo";
 
 const Navbar = () => {
     return (
         <div className="flex items-center justify-between py-4 px-8 h-16">
-            <div>
-                <h1 className="text-xl font-bold text-foreground">
-                    <Link to="/">Spendly</Link>
+             <Link to="/" className="flex items-center gap-2">
+                <SpendlyLogo className="w-8 h-8"/>
+                <h1 className="text-base sm:text-xl font-bold text-muted-foreground">
+                   Spendly
                 </h1>
-            </div>
-            <NavigationMenu>
+            </Link>
+            <NavigationMenu className="hidden md:flex">
                 <NavigationMenuList className="gap-6">
                 <NavigationMenuItem>
                     <a href="/#features">Features</a>
