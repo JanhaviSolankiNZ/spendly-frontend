@@ -128,5 +128,5 @@ export interface IDashboard {
   summary: DashboardSummary;
   recentExpenses:Expense[];
   recentIncome: Income[];
-  dailyExpenses:  {day: string; total: number}[]
+  dailyExpenses:  {day: number; total: number}[]
 }

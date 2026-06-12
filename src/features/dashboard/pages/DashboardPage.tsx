@@ -22,6 +22,7 @@ import { CAT_COLORS, CAT_SHORT, type IDashboard } from "@/types";
 import TxnRow from "../components/TxnRow";
 import { Button } from "@/components/ui/button";
 import QuickAction from "../components/QuickAction";
+import SparklineCard from "../components/SparklineCard";
 
 const greeting = () => {
   const h = new Date().getHours();
@@ -173,6 +174,13 @@ const DashboardPage = () => {
           valueColor="#EF9F27"
         />
       </div>
+
+      {(data?.dailyExpenses ?? []).length > 0 && (
+        <SparklineCard
+          dailyExpenses={data?.dailyExpenses ?? []}
+          daysInMonth={s?.daysInMonth ?? 30}
+        />
+      )}
 
       {/* ── budget alerts — only shown when over or near limit ── */}
       {hasAlerts && (
