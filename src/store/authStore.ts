@@ -26,7 +26,6 @@ export const useAuthStore = create<IAuthState>((set) => ({
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("user", JSON.stringify(user));
       set({ user, loading: false });
-
       toast.success("Welcome back!");
       return true;
     } catch (error: unknown) {
@@ -78,5 +77,13 @@ export const useAuthStore = create<IAuthState>((set) => ({
       set({ user: null, loading: false });
       toast.success("Logged out");
     }
+  },
+  setUser: (user: IUser | null) => {
+    if (user) {
+      localStorage.setItem("user", JSON.stringify(user));
+    } else {
+      localStorage.removeItem("user");
+    }
+    set({ user });
   },
 }));

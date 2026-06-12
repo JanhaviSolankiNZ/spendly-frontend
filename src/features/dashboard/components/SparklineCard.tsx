@@ -87,8 +87,10 @@ const SparklineCard = ({
             />
 
             <Tooltip
-              content={<SparkTooltip />}
-              cursor={{ stroke: "#2d3748", strokeWidth: 1 }}
+                content={<SparkTooltip />}
+                cursor={false}
+                position={{ y: -10 }}
+                offset={0}
             />
             <Area
               type="monotone"

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 import {
@@ -9,16 +9,19 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { useAuthStore } from "@/store/authStore";
 import { useForm } from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod"
 import type { SignInData } from "@/utils/schema";
 import { signInSchema } from "@/utils/schema";
 import { GoogleIcon } from "@/assets/GoogleIcon";
+import toast from "react-hot-toast";
+import { BASE_URL } from "@/services/api";
 
 const SignInPage = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const location = useLocation();
   const { login: loginUser, loading } = useAuthStore();
@@ -36,6 +39,16 @@ const SignInPage = () => {
     }
   }
 
+  useEffect(() => {
+  if (searchParams.get("error") === "google_failed") {
+    toast.error("Google sign in failed. Please try again.");
+  }
+  }, [searchParams]);
+
+  const handleGoogleSignIn = () => {
+    window.location.href = `${BASE_URL}/auth/google`;
+  };
+
   return (
     <div className="flex flex-col flex-1">
     <div className="w-full flex justify-center px-4">
@@ -47,6 +60,7 @@ const SignInPage = () => {
         </CardHeader>
         <CardContent className="space-y-2 px-4 sm:px-6">
           <Button
+            onClick={handleGoogleSignIn}
             variant="outline"
             type="button"
             className="w-full h-9 bg-card-foreground text-muted-foreground cursor-pointer gap-2 border-border hover:bg-card-foreground"

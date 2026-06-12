@@ -11,6 +11,7 @@ import DashboardPage from "@/features/dashboard/pages/DashboardPage";
 import AddExpensePage from "@/features/expense/pages/AddExpensePage";
 import IncomesPage from "@/features/income/pages/IncomesPage";
 import AnalyticsPage from "@/features/analytics/pages/AnalyticsPage";
+import GoogleSuccess from "@/features/auth/pages/googleSuccess/GoogleSuccess";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,7 @@ const router = createBrowserRouter([
           },
         ],
       },
+      { path: "/auth/google/success", element: <GoogleSuccess /> }
     ],
   },
   {
