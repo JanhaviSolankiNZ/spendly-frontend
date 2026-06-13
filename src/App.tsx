@@ -4,6 +4,7 @@ import { RouterProvider } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { useAuthStore } from "./store/authStore";
 import { useEffect, Suspense } from "react";
+import { Loader2 } from "lucide-react";
 
 function App() {
 
@@ -15,8 +16,10 @@ function App() {
 
   return (
     <>
-      <Suspense fallback={<div>Loading...</div>}>
-      <RouterProvider router={router} />
+      <Suspense fallback={<div className="flex items-center justify-center min-h-[60vh]">
+        <Loader2 size={26} className="animate-spin text-primary" />
+      </div>}>
+        <RouterProvider router={router} />
       </Suspense>
       <Toaster
         position="top-right"

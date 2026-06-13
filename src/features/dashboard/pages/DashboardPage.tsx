@@ -1,6 +1,6 @@
 import { currentMonth, shiftMonth, formatMonthLabel } from "@/utils/helpers";
 import { INCOME_COLORS, INCOME_ICONS } from "@/utils/constants";
-import { useEffect, useState } from "react";
+import { lazy, useEffect, useState } from "react";
 import { format } from "date-fns";
 import { useAuthStore } from "@/store/authStore";
 import { useNavigate } from "react-router-dom";
@@ -22,7 +22,7 @@ import { CAT_COLORS, CAT_SHORT, type IDashboard } from "@/types";
 import TxnRow from "../components/TxnRow";
 import { Button } from "@/components/ui/button";
 import QuickAction from "../components/QuickAction";
-import SparklineCard from "../components/SparklineCard";
+const SparklineCard = lazy(() => import("../components/SparklineCard"))
 
 const greeting = () => {
   const h = new Date().getHours();
