@@ -11,7 +11,7 @@ import {
   ChevronRight,
   HelpCircle,
   Loader2,
-  // , Wallet
+  Wallet
 } from "lucide-react";
 import toast from "react-hot-toast";
 import api from "@/services/api";
@@ -298,14 +298,14 @@ const DashboardPage = () => {
           sub="Charts, trends, category breakdowns"
           onClick={() => navigate("/analytics")}
         />
-        {/* <QuickAction
+        <QuickAction
           Icon={Wallet}
           iconBg="rgba(239,159,39,0.15)"
           iconColor="#EF9F27"
           label="Manage budgets"
           sub="Set & track monthly category limits"
           onClick={() => navigate("/budgets")}
-        /> */}
+        />
       </div>
     </PageShell>
   );

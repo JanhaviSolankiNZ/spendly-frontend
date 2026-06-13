@@ -12,4 +12,5 @@ export interface IAuthState{
     logout: () => Promise<void>;
     setUser:  (user: IUser | null) => void;
     hydrate: () => void;
+    isHydrating: boolean;
 }

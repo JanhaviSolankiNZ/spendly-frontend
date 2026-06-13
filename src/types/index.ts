@@ -65,6 +65,21 @@ export interface IncomeSummary {
     total: number;
   }[];
 }
+export interface BudgetSummary{
+  category: ExpenseCategory;
+  limit: number;
+  spent: number;
+  remaining: number;
+  percent: number;
+  isOverBudget: boolean;
+}
+
+export interface IBudget{
+  _id: string;
+  userId: string;
+  category: ExpenseCategory;
+  limit: number;
+}
 
 export const INCOME_TYPES = [
   "Salary",
@@ -76,7 +91,7 @@ export const INCOME_TYPES = [
 ] as const;
 
 export interface CategoryBreakdown {
-  category: string;
+  category: ExpenseCategory;
   total: number;
   count: number;
   percent: number;
@@ -129,4 +144,14 @@ export interface IDashboard {
   recentExpenses:Expense[];
   recentIncome: Income[];
   dailyExpenses:  {day: number; total: number}[]
+}
+
+export interface BudgetWithUsage {
+  _id:          string;
+  category:     ExpenseCategory;
+  limit:        number;
+  spent:        number;
+  percent:      number;
+  isOverBudget: boolean;
+  remaining:    number;
 }

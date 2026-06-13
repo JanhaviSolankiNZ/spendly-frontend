@@ -13,7 +13,8 @@ import {
   LogOut,
   Menu,
   ChevronRight,
-  ChevronLeft
+  ChevronLeft,
+  Wallet
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { SpendlyLogo } from "@/assets/SpendlyLogo";
@@ -23,7 +24,7 @@ const NAV_MAIN = [
   { label: "Expenses", path: "/expenses", Icon: Receipt },
   { label: "Analytics", path: "/analytics", Icon: ChartPie },
   { label: "Add income", path: "/incomes", Icon: PlusCircle },
-  // { label: "Budgets", path: "/budgets", Icon: Wallet },
+  { label: "Budgets", path: "/budgets", Icon: Wallet },
 ];
 
 // const NAV_ACCOUNT = [

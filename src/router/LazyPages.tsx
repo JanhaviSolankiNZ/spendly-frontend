@@ -35,3 +35,7 @@ export const IncomesPage = lazy(() =>
 export const AnalyticsPage = lazy(() =>
   import("@/features/analytics/pages/AnalyticsPage")
 );
+
+export const BudgetsPage = lazy(() =>
+  import("@/features/budgets/pages/BudgetsPage")
+);

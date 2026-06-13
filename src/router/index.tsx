@@ -13,6 +13,7 @@ import {
   AddExpensePage,
   IncomesPage,
   AnalyticsPage,
+  BudgetsPage
 } from "./LazyPages";
 
 const router = createBrowserRouter([
@@ -65,6 +66,10 @@ const router = createBrowserRouter([
           {
             path: "/analytics",
             element: <AnalyticsPage/>
+          },
+          {
+            path: "/budgets",
+            element: <BudgetsPage/>
           }
         ],
       },

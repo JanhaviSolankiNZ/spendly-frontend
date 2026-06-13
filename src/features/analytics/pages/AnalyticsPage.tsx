@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import ChartCard from "../components/ChartCard";
 import KPICard from "../components/KPICard";
 import { analyticsService } from "@/services/analyticsService";
-import { CAT_COLORS, type AnalyticsSummary, type IncomeSummary, type SixMonthTrend } from "@/types";
+import { CAT_COLORS, type AnalyticsSummary, type BudgetSummary, type IncomeSummary, type SixMonthTrend } from "@/types";
 import { incomeService } from "@/services/incomeService";
 import toast from "react-hot-toast";
 import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
@@ -10,6 +10,7 @@ import { PageShell } from "@/layouts/MainLayout";
 import { ResponsiveContainer, Pie, Tooltip, PieChart, Cell, Cell as BarCell, BarChart, CartesianGrid, XAxis, YAxis, Bar, type TooltipProps } from "recharts";
 import type { NameType, ValueType } from "recharts/types/component/DefaultTooltipContent";
 import { currentMonth, shiftMonth, formatMonthLabel } from "@/utils/helpers";
+import BudgetBar from "../components/BudgetBar";
 
 type CustomTooltipProps = TooltipProps<ValueType, NameType> & {
   active?:  boolean;
@@ -38,6 +39,7 @@ const [month,   setMonth]   = useState(currentMonth());
   const [summary, setSummary] = useState<AnalyticsSummary | null>(null);
   const [trend,   setTrend]   = useState<SixMonthTrend | null>(null);
   const [income,  setIncome]  = useState<IncomeSummary |null>(null);
+  const [budget,  setBudget]  = useState<BudgetSummary[] | null>(null);
   const [loading, setLoading] = useState(false);
 
 
@@ -45,13 +47,15 @@ const [month,   setMonth]   = useState(currentMonth());
     const fetchAll = async () => {
       setLoading(true);
       try {
-        const [s, t, inc] = await Promise.all([
+        const [s, t, b, inc] = await Promise.all([
           analyticsService.summary(month),
           analyticsService.trend(month),
+          analyticsService.budget(month),
           incomeService.summary(month),
         ]);
         setSummary(s.data.data);
         setTrend(t.data.data);
+        setBudget(b.data.data.budgets);
         setIncome(inc.data.data);
       } catch {
         toast.error("Failed to load analytics");
@@ -110,7 +114,7 @@ const [month,   setMonth]   = useState(currentMonth());
           </button>
         </div>
     }>
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 mb-4 sm:mb-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-4 sm:mb-6">
           <KPICard
           label="Total income"
           value={`$${(income?.total ?? 0).toLocaleString()}`}
@@ -144,7 +148,7 @@ const [month,   setMonth]   = useState(currentMonth());
           trend={null}
         />
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-4">
         <ChartCard title="Expenses by category">
           {pieData.length === 0 ? (
             <p className="text-sm text-secondary text-center py-8">
@@ -225,7 +229,7 @@ const [month,   setMonth]   = useState(currentMonth());
 
         <ChartCard
         title="6-month spending trend"
-        className="mb-4 md:col-span-full"
+        className="md:col-span-full"
       >
         <div className="flex justify-between items-center mb-3 -mt-2">
           <div className="flex gap-4">
@@ -273,7 +277,26 @@ const [month,   setMonth]   = useState(currentMonth());
           </BarChart>
         </ResponsiveContainer>
       </ChartCard>
-
+              <ChartCard title="Budget utilisation" className="mb-4 md:col-span-full">
+        {(budget ?? []).length === 0 ? (
+          <p className="text-sm text-secondary text-center py-6">
+            No budgets set — go to the Budgets page to set monthly limits.
+          </p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-5">
+            {(budget ?? []).map((b: BudgetSummary) => (
+              <BudgetBar
+                key={b.category}
+                category={b.category}
+                spent={b.spent}
+                limit={b.limit}
+                percent={b.percent}
+                isOverBudget={b.isOverBudget}
+              />
+            ))}
+          </div>
+        )}
+      </ChartCard>
       </div>
     </PageShell>
   )

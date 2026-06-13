@@ -7,6 +7,7 @@ import axios from "axios";
 export const useAuthStore = create<IAuthState>((set) => ({
   user: null,
   loading: false,
+  isHydrating: true,
   login: async (email: string, password: string) => {
     set({ loading: true });
     try {
@@ -65,11 +66,12 @@ export const useAuthStore = create<IAuthState>((set) => ({
     set({ user });
   },
   hydrate: async () => {
+    set({isHydrating: true})
     try {
       const { data } = await authService.me();
-      set({ user: data.data.user });
+      set({ user: data.data.user, isHydrating: false });
     } catch {
-      set({ user: null });
+      set({ user: null, isHydrating: false });
     }
 },
 }));
