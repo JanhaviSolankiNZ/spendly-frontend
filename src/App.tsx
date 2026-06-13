@@ -2,11 +2,19 @@ import "./App.css";
 import router from "@/router";
 import { RouterProvider } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
-import { GoogleOAuthProvider } from "@react-oauth/google";
+import { useAuthStore } from "./store/authStore";
+import { useEffect } from "react";
 
 function App() {
+
+  const hydrate = useAuthStore((s) => s.hydrate);
+
+  useEffect(() => {
+    hydrate();
+  }, [hydrate]);
+
   return (
-    <GoogleOAuthProvider clientId={import.meta.env.VITE_OAUTH_CLIENT_ID}>
+    <>
       <RouterProvider router={router} />
       <Toaster
         position="top-right"
@@ -21,7 +29,7 @@ function App() {
           error: { iconTheme: { primary: "#F09595", secondary: "#500" } },
         }}
       />
-    </GoogleOAuthProvider>
+    </>
   );
 }
 

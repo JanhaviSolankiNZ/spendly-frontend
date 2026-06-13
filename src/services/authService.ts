@@ -15,5 +15,6 @@ export const authService = {
     login: (payload: LoginPayload) => api.post("/auth/login", payload),
     register: (payload: RegisterPayload) => api.post("/auth/register", payload),
     logout: () => api.post("/auth/logout"),
-    refresh: () => api.post("/auth/refresh")
+    refresh: () => api.post("/auth/refresh"),
+    me: () => api.get("/auth/me"),
 }

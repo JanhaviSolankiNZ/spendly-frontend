@@ -11,4 +11,5 @@ export interface IAuthState{
     register: (email: string, password: string, username: string) => Promise<boolean>;
     logout: () => Promise<void>;
     setUser:  (user: IUser | null) => void;
+    hydrate: () => void;
 }

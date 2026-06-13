@@ -8,15 +8,6 @@ const api = axios.create({
 });
 
 let isRefreshing = false;
-let refreshPromise: Promise<string> | null = null;
-
-api.interceptors.request.use((config) => {
-    const token = localStorage.getItem("accessToken");
-    if(token){
-        config.headers["Authorization"] = `Bearer ${token}`;
-    }
-    return config;
-});
 
 api.interceptors.response.use((reponse) => reponse, async (error) => {
     const ogRequest = error.config;
@@ -25,23 +16,13 @@ api.interceptors.response.use((reponse) => reponse, async (error) => {
         try{
             if(!isRefreshing){
                 isRefreshing = true;
-                refreshPromise = axios.post(`${BASE_URL}/auth/refreshAccessToken`, {}, {withCredentials: true})
-                .then((response) => {
-                    const newToken = response.data.data.accessToken;
-                    localStorage.setItem("accessToken", newToken);
-                    return newToken;
-                })
+                axios.post(`${BASE_URL}/auth/refreshAccessToken`, {}, {withCredentials: true})
                 .finally(() => {
                     isRefreshing = false;
                 })
             }
-            const newToken = await refreshPromise;
-
-            ogRequest.headers["Authorization"] = `Bearer ${newToken}`;
             return api(ogRequest);
         }catch{
-            localStorage.removeItem("accessToken");
-            localStorage.removeItem("user");
             window.location.href = "/signin";
             return Promise.reject(error);
         }

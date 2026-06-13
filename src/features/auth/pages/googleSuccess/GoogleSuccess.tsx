@@ -23,8 +23,6 @@ export default function GoogleSuccess() {
 
     try {
       const parsedUser = JSON.parse(decodeURIComponent(user));
-      localStorage.setItem("accessToken", token);
-      localStorage.setItem("user", JSON.stringify(parsedUser));
       setUser(parsedUser);
 
       // clean the URL — remove token from query params immediately

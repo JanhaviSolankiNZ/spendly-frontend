@@ -4,27 +4,14 @@ import { authService } from "@/services/authService";
 import type { IUser, IAuthState } from "@/types/auth";
 import axios from "axios";
 
-const getStoredUser = (): IUser | null => {
-  try {
-    const raw = localStorage.getItem("user");
-    return raw ? JSON.parse(raw) : null;
-  } catch {
-    return null;
-  }
-};
-
 export const useAuthStore = create<IAuthState>((set) => ({
-  user: getStoredUser(),
+  user: null,
   loading: false,
   login: async (email: string, password: string) => {
     set({ loading: true });
     try {
       const { data } = await authService.login({ email, password });
-      const accessToken = data.data.accessToken;
       const user = data.data.user;
-
-      localStorage.setItem("accessToken", accessToken);
-      localStorage.setItem("user", JSON.stringify(user));
       set({ user, loading: false });
       toast.success("Welcome back!");
       return true;
@@ -41,13 +28,11 @@ export const useAuthStore = create<IAuthState>((set) => ({
   register: async (email: string, password: string, username: string) => {
     set({ loading: true });
     try {
-      const { data } = await authService.register({
+      await authService.register({
         email,
         password,
         username,
       });
-      const accessToken = data.data.accessToken;
-      localStorage.setItem("accessToken", accessToken);
       set({ loading: false });
       toast.success("Account created! Please sign in.");
       return true;
@@ -72,18 +57,19 @@ export const useAuthStore = create<IAuthState>((set) => ({
       }
       toast.error(message);
     } finally {
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("user");
       set({ user: null, loading: false });
       toast.success("Logged out");
     }
   },
   setUser: (user: IUser | null) => {
-    if (user) {
-      localStorage.setItem("user", JSON.stringify(user));
-    } else {
-      localStorage.removeItem("user");
-    }
     set({ user });
   },
+  hydrate: async () => {
+    try {
+      const { data } = await authService.me();
+      set({ user: data.data.user });
+    } catch {
+      set({ user: null });
+    }
+},
 }));
