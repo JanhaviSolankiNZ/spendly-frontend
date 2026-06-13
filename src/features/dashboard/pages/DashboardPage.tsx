@@ -109,7 +109,7 @@ const DashboardPage = () => {
   return (
     <PageShell>
       {/* ── greeting + month nav ── */}
-      <div className="flex items-start justify-between gap-3 mb-5 sm:mb-6">
+      <div className="flex flex-col sm:flex-row items-start justify-between gap-3 mb-5 sm:mb-6">
         <div>
           <h1 className="text-lg sm:text-xl font-semibold text-muted-foreground">
             {greeting()}, {user?.username?.split(" ")[0] ?? "there"} 👋
@@ -118,14 +118,14 @@ const DashboardPage = () => {
             Your financial overview for {formatMonthLabel(month)}
           </p>
         </div>
-        <div className="flex items-center bg-card border border-border rounded-lg overflow-hidden shrink-0">
+        <div className="w-full sm:w-auto flex items-center bg-card border border-border rounded-lg overflow-hidden shrink-0">
           <button
             onClick={() => setMonth(shiftMonth(month, -1))}
             className="px-2 py-1.5 text-secondary hover:text-muted-foreground hover:bg-card-foreground transition-colors cursor-pointer"
           >
             <ChevronLeft size={15} />
           </button>
-          <span className="text-xs text-muted-foreground px-2 min-w-[90px] sm:min-w-[110px] text-center select-none">
+          <span className="text-xs flex-1 sm:flex-none text-muted-foreground px-2 min-w-[90px] sm:min-w-[110px] text-center select-none">
             {formatMonthLabel(month)}
           </span>
           <button
