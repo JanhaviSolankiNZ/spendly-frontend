@@ -3,7 +3,7 @@ import router from "@/router";
 import { RouterProvider } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { useAuthStore } from "./store/authStore";
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 
 function App() {
 
@@ -15,7 +15,9 @@ function App() {
 
   return (
     <>
+      <Suspense fallback={<div>Loading...</div>}>
       <RouterProvider router={router} />
+      </Suspense>
       <Toaster
         position="top-right"
         toastOptions={{

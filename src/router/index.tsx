@@ -1,17 +1,19 @@
 import { createBrowserRouter } from "react-router-dom";
 import AuthLayout from "@/layouts/AuthLayout";
-import SignInPage from "@/features/auth/pages/signin/SignInPage";
-import SignUpPage from "@/features/auth/pages/signup/SignUpPage";
-import LandingPage from "@/features/landing/pages/LandingPage";
 import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
 import MainLayout from "@/layouts/MainLayout";
-import ExpensePage from "@/features/expense/pages/ExpensePage";
-import DashboardPage from "@/features/dashboard/pages/DashboardPage";
-import AddExpensePage from "@/features/expense/pages/AddExpensePage";
-import IncomesPage from "@/features/income/pages/IncomesPage";
-import AnalyticsPage from "@/features/analytics/pages/AnalyticsPage";
-import GoogleSuccess from "@/features/auth/pages/googleSuccess/GoogleSuccess";
+import {
+  LandingPage,
+  SignInPage,
+  SignUpPage,
+  GoogleSuccess,
+  DashboardPage,
+  ExpensePage,
+  AddExpensePage,
+  IncomesPage,
+  AnalyticsPage,
+} from "./LazyPages";
 
 const router = createBrowserRouter([
   {

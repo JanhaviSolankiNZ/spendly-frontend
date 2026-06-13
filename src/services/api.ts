@@ -16,7 +16,7 @@ api.interceptors.response.use((reponse) => reponse, async (error) => {
         try{
             if(!isRefreshing){
                 isRefreshing = true;
-                axios.post(`${BASE_URL}/auth/refreshAccessToken`, {}, {withCredentials: true})
+                await axios.post(`${BASE_URL}/auth/refreshAccessToken`, {}, {withCredentials: true})
                 .finally(() => {
                     isRefreshing = false;
                 })
