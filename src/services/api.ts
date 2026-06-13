@@ -14,7 +14,7 @@ api.interceptors.response.use((reponse) => reponse, async (error) => {
     if(error.response?.status === 401 && !ogRequest._retry){
         ogRequest._retry = true;
         try{
-            if(!isRefreshing && !ogRequest._retry){
+            if(!isRefreshing){
                 isRefreshing = true;
                 await axios.post(`${BASE_URL}/auth/refreshAccessToken`, {}, {withCredentials: true})
                 .finally(() => {
