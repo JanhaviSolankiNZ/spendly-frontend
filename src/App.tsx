@@ -9,9 +9,13 @@ import { Loader2 } from "lucide-react";
 function App() {
 
   const hydrate = useAuthStore((s) => s.hydrate);
-
+  const hasSessionCookie = () => document.cookie.includes("hasSession=true");
   useEffect(() => {
-    hydrate();
+      if (hasSessionCookie()) {
+          hydrate();
+      } else {
+       useAuthStore.setState({ user: null, loading: false });
+      }
   }, [hydrate]);
 
   return (
