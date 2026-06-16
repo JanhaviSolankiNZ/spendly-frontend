@@ -7,7 +7,7 @@ import axios from "axios";
 export const useAuthStore = create<IAuthState>((set) => ({
   user: null,
   loading: false,
-  isHydrating: true,
+  isHydrating: false,
   login: async (email: string, password: string) => {
     set({ loading: true });
     try {

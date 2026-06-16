@@ -155,3 +155,10 @@ export interface BudgetWithUsage {
   isOverBudget: boolean;
   remaining:    number;
 }
+
+export interface Subscription{
+  plan: "free" | "pro";
+  subscriptionStatus : "active" | "canceled" | "past_due" | "trialing" | "incomplete" | undefined;
+  currentPeriodEnd: Date | undefined;
+  isActive: boolean;
+}

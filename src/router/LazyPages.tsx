@@ -39,3 +39,9 @@ export const AnalyticsPage = lazy(() =>
 export const BudgetsPage = lazy(() =>
   import("@/features/budgets/pages/BudgetsPage")
 );
+
+export const PaymentSuccess = lazy(() => import("@/features/payment/pages/PaymentSuccess"));
+
+export const PaymentCancel = lazy(() => import("@/features/payment/pages/PaymentCancel"));
+
+export const Settings = lazy(() => import("@/features/settings/pages/Settings"));

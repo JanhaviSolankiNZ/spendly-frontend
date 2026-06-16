@@ -13,7 +13,10 @@ import {
   AddExpensePage,
   IncomesPage,
   AnalyticsPage,
-  BudgetsPage
+  BudgetsPage,
+  PaymentSuccess,
+  PaymentCancel,
+  Settings
 } from "./LazyPages";
 
 const router = createBrowserRouter([
@@ -34,7 +37,7 @@ const router = createBrowserRouter([
           },
         ],
       },
-      { path: "/auth/google/success", element: <GoogleSuccess /> }
+      { path: "/auth/google/success", element: <GoogleSuccess /> },
     ],
   },
   {
@@ -49,11 +52,11 @@ const router = createBrowserRouter([
           },
           {
             path: "/expenses/:id",
-            element: <AddExpensePage/>
+            element: <AddExpensePage />,
           },
           {
             path: "/expenses/add",
-            element: <AddExpensePage/>
+            element: <AddExpensePage />,
           },
           {
             path: "/expenses",
@@ -65,12 +68,15 @@ const router = createBrowserRouter([
           },
           {
             path: "/analytics",
-            element: <AnalyticsPage/>
+            element: <AnalyticsPage />,
           },
           {
             path: "/budgets",
-            element: <BudgetsPage/>
-          }
+            element: <BudgetsPage />,
+          },
+          { path: "/payment/success", element: <PaymentSuccess /> },
+          { path: "/payment/cancel", element: <PaymentCancel /> },
+          { path: "/settings", element: <Settings /> },
         ],
       },
     ],

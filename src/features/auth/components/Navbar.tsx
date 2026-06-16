@@ -6,7 +6,7 @@ const Navbar = () => {
     const location = useLocation();
     const isSignIn = location.pathname === "/signin";
     return (
-        <div className="flex items-center justify-between px-4 h-16 border-b border-border sm:px-8 sm:h-16">
+        <div className="flex items-center justify-between px-4 h-14 border-b border-border sm:px-8 sm:h-16">
             <Link to="/" className="flex items-center gap-2 shrink-0">
                 <SpendlyLogo className="w-8 h-8"/>
                 <h1 className="leading-none text-base sm:text-xl font-bold text-muted-foreground">
