@@ -1,6 +1,6 @@
 import { currentMonth, shiftMonth, formatMonthLabel } from "@/utils/helpers";
 import { INCOME_COLORS, INCOME_ICONS } from "@/utils/constants";
-import { lazy, useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { format } from "date-fns";
 import { useAuthStore } from "@/store/authStore";
 import { useNavigate } from "react-router-dom";
@@ -168,14 +168,18 @@ const DashboardPage = () => {
           valueColor="#EF9F27"
         />
       </div>
-
-      {(data?.dailyExpenses ?? []).length > 0 && (
+      <Suspense fallback={<div className="h-[180px] bg-card border border-border rounded-xl animate-pulse mb-4 sm:mb-5"/>}>
+      {loading ? (
+        <div className="h-[180px] bg-card border border-border rounded-xl animate-pulse mb-4 sm:mb-5" />
+      ): (data?.dailyExpenses ?? []).length > 0 ? (
         <SparklineCard
           dailyExpenses={data?.dailyExpenses ?? []}
           daysInMonth={s?.daysInMonth ?? 30}
         />
-      )}
-
+      ):<div className="h-[180px] bg-card border border-border rounded-xl flex items-center justify-center text-secondary text-xs mb-4 sm:mb-5">
+      No spending data yet
+    </div>}
+    </Suspense>
       {/* ── budget alerts — only shown when over or near limit ── */}
       {hasAlerts && (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 mb-4 sm:mb-5">
