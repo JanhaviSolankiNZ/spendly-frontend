@@ -16,14 +16,17 @@ import {
   BudgetsPage,
   PaymentSuccess,
   PaymentCancel,
-  Settings
+  Settings,
 } from "./LazyPages";
 
 const router = createBrowserRouter([
+  { path: "/payment/success", element: <PaymentSuccess /> },
+  { path: "/payment/cancel", element: <PaymentCancel /> },
   {
     element: <PublicRoute />,
     children: [
       { path: "/", element: <LandingPage /> },
+
       {
         element: <AuthLayout />,
         children: [
@@ -74,8 +77,6 @@ const router = createBrowserRouter([
             path: "/budgets",
             element: <BudgetsPage />,
           },
-          { path: "/payment/success", element: <PaymentSuccess /> },
-          { path: "/payment/cancel", element: <PaymentCancel /> },
           { path: "/settings", element: <Settings /> },
         ],
       },
