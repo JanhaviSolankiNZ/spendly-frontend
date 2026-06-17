@@ -5,12 +5,13 @@ import { analyticsService } from "@/services/analyticsService";
 import { CAT_COLORS, type AnalyticsSummary, type BudgetSummary, type IncomeSummary, type SixMonthTrend } from "@/types";
 import { incomeService } from "@/services/incomeService";
 import toast from "react-hot-toast";
-import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { PageShell } from "@/layouts/MainLayout";
 import { ResponsiveContainer, Pie, Tooltip, PieChart, Cell, Cell as BarCell, BarChart, CartesianGrid, XAxis, YAxis, Bar, type TooltipProps } from "recharts";
 import type { NameType, ValueType } from "recharts/types/component/DefaultTooltipContent";
 import { currentMonth, shiftMonth, formatMonthLabel } from "@/utils/helpers";
 import BudgetBar from "../components/BudgetBar";
+import Loader from "@/components/Loader";
 
 type CustomTooltipProps = TooltipProps<ValueType, NameType> & {
   active?:  boolean;
@@ -40,7 +41,7 @@ const [month,   setMonth]   = useState(currentMonth());
   const [trend,   setTrend]   = useState<SixMonthTrend | null>(null);
   const [income,  setIncome]  = useState<IncomeSummary |null>(null);
   const [budget,  setBudget]  = useState<BudgetSummary[] | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
 
     useEffect(() => {
@@ -86,14 +87,6 @@ const [month,   setMonth]   = useState(currentMonth());
     current: t.current,
   })) ?? [];
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-[60vh]">
-        <Loader2 size={26} className="animate-spin text-primary" />
-      </div>
-    );
-  }
-
   return (
     <PageShell  title="Analytics" action={
         <div className="flex items-center bg-card border border-border rounded-lg overflow-hidden">
@@ -114,6 +107,7 @@ const [month,   setMonth]   = useState(currentMonth());
           </button>
         </div>
     }>
+      {loading && <Loader overlay={true}/>}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-4 sm:mb-6">
           <KPICard
           label="Total income"

@@ -3,27 +3,24 @@ import router from "@/router";
 import { RouterProvider } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { useAuthStore } from "./store/authStore";
-import { useEffect, Suspense } from "react";
-import { Loader2 } from "lucide-react";
+import { useEffect } from "react";
+import Loader from "./components/Loader";
 
 function App() {
   const hydrate = useAuthStore((s) => s.hydrate);
+  const authStatus = useAuthStore((s) => s.authStatus);
 
   useEffect(() => {
-      if (document.cookie.includes("hasSession=true")) {
-          hydrate();
-      } else {
-       useAuthStore.setState({ user: null, loading: false });
-      }
+  hydrate();
   }, [hydrate]);
+
+  if (authStatus === "loading") {
+    return <Loader />
+  }
 
   return (
     <>
-      <Suspense fallback={<div className="flex items-center justify-center min-h-[60vh]">
-        <Loader2 size={26} className="animate-spin text-primary" />
-      </div>}>
-        <RouterProvider router={router} />
-      </Suspense>
+      <RouterProvider router={router} />
       <Toaster
         position="top-right"
         toastOptions={{

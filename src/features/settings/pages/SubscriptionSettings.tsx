@@ -3,6 +3,7 @@ import { Check, Loader2, CreditCard, XCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import api from "@/services/api";
 import toast from "react-hot-toast";
+import Loader from "@/components/Loader";
 
 interface Subscription {
   plan: "free" | "pro";
@@ -79,14 +80,6 @@ export default function SubscriptionSettings() {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="flex justify-center py-10">
-        <Loader2 size={22} className="animate-spin text-primary" />
-      </div>
-    );
-  }
-
   const isPro = sub?.plan === "pro";
   const status = sub?.subscriptionStatus
     ? STATUS_LABELS[sub.subscriptionStatus]
@@ -102,6 +95,7 @@ export default function SubscriptionSettings() {
 
   return (
     <div className="max-w-sm">
+      {loading && <Loader overlay={true}  />}
       <h3 className="text-sm font-medium text-muted-foreground mb-3.5">
         Subscription
       </h3>

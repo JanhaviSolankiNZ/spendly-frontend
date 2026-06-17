@@ -6,7 +6,8 @@ export interface IUser{
 
 export interface IAuthState{
     user: IUser | null;
-    loading: boolean;
+    isAuthLoading: boolean;
+    authStatus: "loading" | "authenticated" | "unauthenticated";
     login: (email: string, password: string) => Promise<boolean>;
     register: (email: string, password: string, username: string) => Promise<boolean>;
     logout: () => Promise<void>;

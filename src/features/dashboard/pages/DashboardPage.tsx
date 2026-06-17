@@ -10,7 +10,6 @@ import {
   ChevronLeft,
   ChevronRight,
   HelpCircle,
-  Loader2,
   Wallet
 } from "lucide-react";
 import toast from "react-hot-toast";
@@ -22,6 +21,7 @@ import { CAT_COLORS, CAT_SHORT, type IDashboard } from "@/types";
 import TxnRow from "../components/TxnRow";
 import { Button } from "@/components/ui/button";
 import QuickAction from "../components/QuickAction";
+import Loader from "@/components/Loader";
 const SparklineCard = lazy(() => import("../components/SparklineCard"))
 
 const greeting = () => {
@@ -73,7 +73,7 @@ const greeting = () => {
 const DashboardPage = () => {
   const [month, setMonth] = useState(currentMonth());
   const [data, setData] = useState<IDashboard | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const { user } = useAuthStore();
   const navigate = useNavigate();
 
@@ -92,13 +92,6 @@ const DashboardPage = () => {
     fetch();
   }, [month]);
 
-  if (loading)
-    return (
-      <div className="flex items-center justify-center min-h-[60vh]">
-        <Loader2 size={26} className="animate-spin text-primary" />
-      </div>
-    );
-
   const s = data?.summary;
   //const budgets  = data?.budgets ?? [];
   // const overBudget  = budgets.filter((b: any) => b.isOverBudget);
@@ -108,6 +101,7 @@ const DashboardPage = () => {
 
   return (
     <PageShell>
+      {loading && <Loader overlay={true}  />}
       {/* ── greeting + month nav ── */}
       <div className="flex flex-col sm:flex-row items-start justify-between gap-3 mb-5 sm:mb-6">
         <div>

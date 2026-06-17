@@ -3,7 +3,6 @@ import { PageShell } from "@/layouts/MainLayout";
 import { Button } from "@/components/ui/button";
 import {
   Download,
-  Loader2,
   Plus,
   Receipt,
   Search,
@@ -26,13 +25,14 @@ import FilterRow from "../components/FilterRow";
 import ExpenseCard from "../components/ExpenseCard";
 import ExpenseTableRow from "../components/ExpenseTableRow";
 import { currentMonth } from "@/utils/helpers";
+import Loader from "@/components/Loader";
 
 const ExpensePage = () => {
   const [searchQ, setSearchQ] = useState("");
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [summary, setSummary] = useState<ExpenseSummary | null>(null);
   const [pagination, setPagination] = useState({ total: 0, totalPages: 1 });
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [deleting, setDeleting] = useState<string | null>(null);
   const [filterOpen, setFilterOpen] = useState(false);
   const [filters, setFilters] = useState({
@@ -160,6 +160,7 @@ const vsText = summary !== null ? `${summary?.vsLastMonth > 0 ? "+": ""}${summar
         </div>
       }
     >
+      {loading && <Loader overlay={true}  />}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 mb-4 sm:mb-6">
         <KpiCard
           label="This month"
@@ -273,11 +274,7 @@ const vsText = summary !== null ? `${summary?.vsLastMonth > 0 ? "+": ""}${summar
         </div>)}
       </div>
 
-      {loading ? (
-        <div className="flex justify-center py-16">
-          <Loader2 size={24} className="animate-spin text-primary" />
-        </div>
-      ) : expenses.length === 0 ? (
+      {expenses.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-16 text-secondary ">
           <Receipt size={32} className="mb-3 opacity-30" />
           <p className="text-sm">No expenses found for this period</p>

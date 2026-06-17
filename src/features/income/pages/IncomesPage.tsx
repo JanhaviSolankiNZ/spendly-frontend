@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Briefcase, Loader2 } from "lucide-react";
 import { currentMonth } from "@/utils/helpers";
+import Loader from "@/components/Loader";
 
 const IncomesPage = () => {
     const [incomes,     setIncomes]     = useState<Income[]>([]);
@@ -217,11 +218,8 @@ const fetchHistory = useCallback(async () => {
                 </Card>
                 <Card className="border-border flex-1">
             <CardContent className="pt-4">
-              {loadingList ? (
-                <div className="flex justify-center py-10">
-                  <Loader2 size={20} className="animate-spin text-primary" />
-                </div>
-              ) : incomes.length === 0 ? (
+              {loadingList && <Loader />}
+              {incomes.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-10 text-secondary">
                   <Briefcase size={28} className="mb-2 opacity-30" />
                   <p className="text-sm">No income entries this month</p>

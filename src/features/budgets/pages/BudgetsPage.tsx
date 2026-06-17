@@ -6,14 +6,15 @@ import { analyticsService } from "@/services/analyticsService";
 import toast from "react-hot-toast";
 import { PageShell } from "@/layouts/MainLayout";
 import { Button } from "@/components/ui/button";
-import { AlertCircle, AlertTriangle, Loader2, Plus } from "lucide-react";
+import { AlertCircle, AlertTriangle, Plus } from "lucide-react";
 import KpiCard from "../components/KpiCard";
 import BudgetBar from "../components/BudgetBar";
 import BudgetModal from "../components/BudgetModal";
+import Loader from "@/components/Loader";
 
 const BudgetsPage = () => {
   const [budgets, setBudgets] = useState<BudgetWithUsage[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [deleting, setDeleting] = useState<string | null>(null);
   const [modal, setModal] = useState(false);
   const [editing, setEditing] = useState<BudgetWithUsage | null>(null);
@@ -114,6 +115,7 @@ const BudgetsPage = () => {
           </Button>
         }
       >
+        {loading && <Loader overlay={true} />}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 mb-4 sm:mb-5">
           <KpiCard
             label="Total budget"
@@ -206,11 +208,7 @@ const BudgetsPage = () => {
             ))}
           </div>
         )}
-        {loading ? (
-          <div className="flex justify-center py-16">
-            <Loader2 size={24} className="animate-spin text-primary" />
-          </div>
-        ) : budgets.length === 0 ? (
+        {budgets.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-16 text-secondary bg-card border border-border rounded-xl">
             <div className="w-12 h-12 rounded-xl bg-card-foreground flex items-center justify-center mb-3">
               <Plus size={20} className="text-secondary" />

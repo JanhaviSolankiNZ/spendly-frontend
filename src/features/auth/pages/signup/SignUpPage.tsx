@@ -23,7 +23,7 @@ const SignUpPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const {register: registerUser, loading} = useAuthStore();
+  const {register: registerUser, isAuthLoading} = useAuthStore();
 
   const {register, handleSubmit, formState: {errors}, setError} = useForm<SignUpData>({resolver: zodResolver(signUpSchema)});
 
@@ -106,7 +106,7 @@ const SignUpPage = () => {
                 )}
               </div>
               <Button className="w-full h-10 font-medium cursor-pointer" type="submit">
-                {loading ? <><Loader2 size={16} className="animate-spin" /> Signing up...</> : "Sign up"}
+                {isAuthLoading ? <><Loader2 size={16} className="animate-spin" /> Signing up...</> : "Sign up"}
               </Button>
             </form>
             <p className="text-secondary text-center text-sm">Already have an account? <Link to="/signin" className="text-primary font-medium hover:underline">Sign in</Link></p>

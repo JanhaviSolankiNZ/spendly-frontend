@@ -23,7 +23,12 @@ api.interceptors.response.use((reponse) => reponse, async (error) => {
             }
             return api(ogRequest);
         }catch{
-            window.location.href = "/signin";
+                await axios.post(
+                `${BASE_URL}/auth/logout`,
+                {},
+                { withCredentials: true }
+                );
+            window.location.replace("/signin");
             return Promise.reject(error);
         }
     }

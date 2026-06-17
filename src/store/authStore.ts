@@ -6,14 +6,15 @@ import axios from "axios";
 
 export const useAuthStore = create<IAuthState>((set) => ({
   user: null,
-  loading: false,
+  isAuthLoading: false,
   isHydrating: false,
+  authStatus: "loading",
   login: async (email: string, password: string) => {
-    set({ loading: true });
+    set({ isAuthLoading: true });
     try {
       const { data } = await authService.login({ email, password });
       const user = data.data.user;
-      set({ user, loading: false });
+      set({ user, isAuthLoading: false, authStatus: "authenticated"  });
       toast.success("Welcome back!");
       return true;
     } catch (error: unknown) {
@@ -22,19 +23,19 @@ export const useAuthStore = create<IAuthState>((set) => ({
         message = error.response?.data?.message || message;
       }
       toast.error(message);
-      set({ loading: false });
+      set({ isAuthLoading: false, authStatus: "unauthenticated"  });
       return false;
     }
   },
   register: async (email: string, password: string, username: string) => {
-    set({ loading: true });
+    set({ isAuthLoading: true });
     try {
       await authService.register({
         email,
         password,
         username,
       });
-      set({ loading: false });
+      set({ isAuthLoading: false });
       toast.success("Account created! Please sign in.");
       return true;
     } catch (error: unknown) {
@@ -43,12 +44,12 @@ export const useAuthStore = create<IAuthState>((set) => ({
         message = error.response?.data?.message || message;
       }
       toast.error(message);
-      set({ loading: false });
+      set({ isAuthLoading: false, authStatus: "unauthenticated" });
       return false;
     }
   },
   logout: async () => {
-    set({ loading: true });
+    set({ isAuthLoading: true });
     try {
       await authService.logout();
     } catch (error: unknown) {
@@ -58,7 +59,7 @@ export const useAuthStore = create<IAuthState>((set) => ({
       }
       toast.error(message);
     } finally {
-      set({ user: null, loading: false });
+      set({ user: null, isAuthLoading: false });
       toast.success("Logged out");
     }
   },
@@ -69,9 +70,9 @@ export const useAuthStore = create<IAuthState>((set) => ({
     set({isHydrating: true})
     try {
       const { data } = await authService.me();
-      set({ user: data.data.user, isHydrating: false });
+      set({ user: data.data.user, isHydrating: false, authStatus: "authenticated" });
     } catch {
-      set({ user: null, isHydrating: false });
+      set({ user: null, isHydrating: false, authStatus: "unauthenticated" });
     }
 },
 }));
