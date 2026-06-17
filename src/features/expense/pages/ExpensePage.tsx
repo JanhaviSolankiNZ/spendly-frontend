@@ -26,6 +26,7 @@ import ExpenseCard from "../components/ExpenseCard";
 import ExpenseTableRow from "../components/ExpenseTableRow";
 import { currentMonth } from "@/utils/helpers";
 import Loader from "@/components/Loader";
+import { usePro } from "@/hooks/usePro";
 
 const ExpensePage = () => {
   const [searchQ, setSearchQ] = useState("");
@@ -44,6 +45,7 @@ const ExpensePage = () => {
 
   const debounceRef = useRef<number | null>(null);
   const navigate = useNavigate();
+  const isPro = usePro();
 
   const debounceSearch = (search: string) => {
     setSearchQ(search);
@@ -148,7 +150,7 @@ const vsText = summary !== null ? `${summary?.vsLastMonth > 0 ? "+": ""}${summar
       title="Expenses"
       action={
         <div className="flex gap-2">
-          <Button className="hidden sm:flex border-border text-foreground bg-card-foreground cursor-pointer gap-1.5" onClick={handleExport}>
+          <Button className="hidden sm:flex border-border text-foreground bg-card-foreground cursor-pointer gap-1.5" onClick={isPro ? handleExport : () => navigate("/settings?upgrade=true")}>
             <Download size={14} />
             <span className="hidden md:inline">Export CSV</span>
           </Button>

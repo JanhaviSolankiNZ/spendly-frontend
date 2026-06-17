@@ -2,6 +2,8 @@ export interface IUser{
     id:string;
     email:string;
     username: string;
+    plan:     "free" | "pro";
+    isPro:    boolean;
 }
 
 export interface IAuthState{

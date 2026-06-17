@@ -1,4 +1,5 @@
 import axios from "axios";
+import toast from "react-hot-toast";
 
 export const BASE_URL =
   import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
@@ -14,6 +15,10 @@ let refreshFailed = false;
 api.interceptors.response.use(
   (reponse) => reponse,
   async (error) => {
+    if (error.response?.status === 403 &&
+        error.response?.data?.message?.includes("Pro")) {
+      toast.error("This feature requires a Pro subscription");
+    }
     const ogRequest = error.config;
     if (error.response?.status === 401 && !ogRequest._retry) {
       if (refreshFailed) {

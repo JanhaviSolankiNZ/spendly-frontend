@@ -137,13 +137,15 @@ interface DashboardSummary {
   daysInMonth: number;
   expenseChange: number;
   incomeChange: number;
+
 }
 
 export interface IDashboard {
   summary: DashboardSummary;
   recentExpenses:Expense[];
   recentIncome: Income[];
-  dailyExpenses:  {day: number; total: number}[]
+  dailyExpenses:  {day: number; total: number}[];
+  budgets: BudgetSummary[]
 }
 
 export interface BudgetWithUsage {

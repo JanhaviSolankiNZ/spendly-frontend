@@ -42,7 +42,7 @@ const fetchHistory = useCallback(async () => {
             setIncomes(listRes.data.data.incomes);
       setSummary(sumRes.data.data);
         }catch{
-            toast.error("Failed to load income history");
+            console.log("Failed to load income history");
         }finally{
             setLoadingList(false);
         }

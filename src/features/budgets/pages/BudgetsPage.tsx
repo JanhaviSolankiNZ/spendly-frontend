@@ -42,7 +42,7 @@ const BudgetsPage = () => {
       });
       setBudgets(merged);
     } catch {
-      toast.error("Failed to load budgets");
+      console.log("Failed to load budgets");
     } finally {
       setLoading(false);
     }

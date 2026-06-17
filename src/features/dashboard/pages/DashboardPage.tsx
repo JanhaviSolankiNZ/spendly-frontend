@@ -5,6 +5,8 @@ import { format } from "date-fns";
 import { useAuthStore } from "@/store/authStore";
 import { useNavigate } from "react-router-dom";
 import {
+  AlertCircle,
+  AlertTriangle,
   Briefcase,
   ChartPie,
   ChevronLeft,
@@ -12,7 +14,6 @@ import {
   HelpCircle,
   Wallet
 } from "lucide-react";
-import toast from "react-hot-toast";
 import api from "@/services/api";
 import { PageShell } from "@/layouts/MainLayout";
 import KpiCard from "../components/KpiCard";
@@ -31,44 +32,44 @@ const greeting = () => {
   return "Good evening";
 };
 
-// function AlertCard({
-//   type, title, sub,
-// }: {
-//   type: "danger" | "warn"; title: string; sub: string;
-// }) {
-//   const isDanger = type === "danger";
-//   return (
-//     <div
-//       className="flex gap-2.5 items-start p-3 rounded-xl border"
-//       style={{
-//         background: isDanger ? "rgba(240,149,149,0.07)" : "rgba(239,159,39,0.07)",
-//         borderColor: isDanger ? "rgba(240,149,149,0.3)" : "rgba(239,159,39,0.3)",
-//       }}
-//     >
-//       <div
-//         className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0"
-//         style={{
-//           background: isDanger ? "#F09595" : "#EF9F27",
-//           color:      isDanger ? "#501313"  : "#412402",
-//         }}
-//       >
-//         {isDanger
-//           ? <AlertTriangle size={13} />
-//           : <AlertCircle  size={13} />
-//         }
-//       </div>
-//       <div>
-//         <p
-//           className="text-xs font-medium"
-//           style={{ color: isDanger ? "#F09595" : "#EF9F27" }}
-//         >
-//           {title}
-//         </p>
-//         <p className="text-[10px] text-secondary mt-0.5">{sub}</p>
-//       </div>
-//     </div>
-//   );
-// }
+function AlertCard({
+  type, title, sub,
+}: {
+  type: "danger" | "warn"; title: string; sub: string;
+}) {
+  const isDanger = type === "danger";
+  return (
+    <div
+      className="flex gap-2.5 items-start p-3 rounded-xl border"
+      style={{
+        background: isDanger ? "rgba(240,149,149,0.07)" : "rgba(239,159,39,0.07)",
+        borderColor: isDanger ? "rgba(240,149,149,0.3)" : "rgba(239,159,39,0.3)",
+      }}
+    >
+      <div
+        className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0"
+        style={{
+          background: isDanger ? "#F09595" : "#EF9F27",
+          color:      isDanger ? "#501313"  : "#412402",
+        }}
+      >
+        {isDanger
+          ? <AlertTriangle size={13} />
+          : <AlertCircle  size={13} />
+        }
+      </div>
+      <div>
+        <p
+          className="text-xs font-medium"
+          style={{ color: isDanger ? "#F09595" : "#EF9F27" }}
+        >
+          {title}
+        </p>
+        <p className="text-[10px] text-secondary mt-0.5">{sub}</p>
+      </div>
+    </div>
+  );
+}
 
 const DashboardPage = () => {
   const [month, setMonth] = useState(currentMonth());
@@ -84,7 +85,7 @@ const DashboardPage = () => {
         const res = await api.get("/dashboard", { params: { month } });
         setData(res.data.data);
       } catch {
-        toast.error("Failed to load dashboard");
+        console.log("Failed to load dashboard");
       } finally {
         setLoading(false);
       }
@@ -93,11 +94,10 @@ const DashboardPage = () => {
   }, [month]);
 
   const s = data?.summary;
-  //const budgets  = data?.budgets ?? [];
-  // const overBudget  = budgets.filter((b: any) => b.isOverBudget);
-  // const nearBudget  = budgets.filter((b: any) => !b.isOverBudget && b.percent >= 85);
-  //const hasAlerts   = overBudget.length > 0 || nearBudget.length > 0;
-  const hasAlerts = false;
+  const budgets  = data?.budgets ?? [];
+  const overBudget  = budgets.filter((b) => b.isOverBudget);
+  const nearBudget  = budgets.filter((b) => !b.isOverBudget && b.percent >= 85);
+  const hasAlerts   = overBudget.length > 0 || nearBudget.length > 0;
 
   return (
     <PageShell>
@@ -179,7 +179,7 @@ const DashboardPage = () => {
       {/* ── budget alerts — only shown when over or near limit ── */}
       {hasAlerts && (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 mb-4 sm:mb-5">
-          {/* {overBudget.map((b: any) => (
+          {overBudget.map((b) => (
             <AlertCard
               key={b.category}
               type="danger"
@@ -187,14 +187,14 @@ const DashboardPage = () => {
               sub={`Spent $${b.spent.toLocaleString()} of $${b.limit.toLocaleString()} — $${(b.spent - b.limit).toLocaleString()} over`}
             />
           ))}
-          {nearBudget.map((b: any) => (
+          {nearBudget.map((b) => (
             <AlertCard
               key={b.category}
               type="warn"
               title={`${b.category.split(" / ")[0]} at ${b.percent.toFixed(0)}%`}
               sub={`$${b.remaining.toLocaleString()} remaining this month`}
             />
-          ))} */}
+          ))}
         </div>
       )}
 

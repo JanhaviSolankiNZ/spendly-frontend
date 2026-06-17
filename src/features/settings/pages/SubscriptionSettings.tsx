@@ -49,7 +49,7 @@ export default function SubscriptionSettings() {
         const { data } = await api.get("/payments/subscription");
         setSub(data.data);
       } catch {
-        toast.error("Failed to load subscription");
+        console.log("Failed to load subscription");
       } finally {
         setLoading(false);
       }
