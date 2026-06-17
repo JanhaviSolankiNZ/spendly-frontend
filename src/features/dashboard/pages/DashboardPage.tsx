@@ -114,6 +114,7 @@ const DashboardPage = () => {
         </div>
         <div className="w-full sm:w-auto flex items-center bg-card border border-border rounded-lg overflow-hidden shrink-0">
           <button
+            aria-label="Previous month"
             onClick={() => setMonth(shiftMonth(month, -1))}
             className="px-2 py-1.5 text-secondary hover:text-muted-foreground hover:bg-card-foreground transition-colors cursor-pointer"
           >
@@ -123,6 +124,7 @@ const DashboardPage = () => {
             {formatMonthLabel(month)}
           </span>
           <button
+            aria-label="Next month"
             onClick={() => setMonth(shiftMonth(month, 1))}
             className="px-2 py-1.5 text-secondary hover:text-muted-foreground hover:bg-card-foreground transition-colors cursor-pointer"
           >
@@ -238,6 +240,7 @@ const DashboardPage = () => {
               size="sm"
               className="w-full border-border text-secondary cursor-pointer"
               onClick={() => navigate("/expenses/add")}
+              aria-label="Add expense"
             >
               + Add expense
             </Button>
@@ -279,6 +282,7 @@ const DashboardPage = () => {
               size="sm"
               className="w-full border-border text-secondary cursor-pointer"
               onClick={() => navigate("/income/add")}
+              aria-label="Add income"
             >
               + Add income
             </Button>

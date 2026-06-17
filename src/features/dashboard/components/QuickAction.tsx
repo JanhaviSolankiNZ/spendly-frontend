@@ -8,6 +8,7 @@ const QuickAction = ({
 }) => {
   return (
     <button
+      aria-label={label}
       onClick={onClick}
       className="flex items-center gap-3 p-3 sm:p-4 bg-card border border-border rounded-xl hover:bg-card-foreground transition-colors cursor-pointer text-left w-full"
     >

@@ -10,6 +10,7 @@ const SectionHeader = ({
       <p className="text-sm font-medium text-muted-foreground">{title}</p>
       {linkLabel && onLink && (
         <button
+          aria-label="View all"
           onClick={onLink}
           className="flex items-center gap-1 text-xs text-primary hover:underline cursor-pointer"
         >

@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+Allow: /signin
+Allow: /signup
+Disallow: /dashboard
+Disallow: /expenses
+Disallow: /income
+Disallow: /analytics
+Disallow: /budgets
+Disallow: /settings
+Disallow: /alerts
+Disallow: /payment
+Sitemap: https://spendly-frontend-azure.vercel.app/sitemap.xml

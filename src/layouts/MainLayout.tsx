@@ -154,6 +154,7 @@ const DesktopSidebar = () => {
         </div>
         <button
           onClick={handleLogout}
+          aria-label="Logout"
           className={cn(
             "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-secondary",
             "hover:bg-red-500/10 hover:text-red-400 transition-all cursor-pointer",
@@ -272,6 +273,7 @@ const MobileTopBar = ({ onMenuOpen }: { onMenuOpen: () => void }) => {
         </span>
       </div>
       <button
+        aria-label="Open menu"
         onClick={onMenuOpen}
         className="p-2 rounded-full text-secondary hover:text-muted-foreground hover:bg-card-foreground transition-colors cursor-pointer"
       >
