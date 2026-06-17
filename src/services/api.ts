@@ -1,38 +1,54 @@
 import axios from "axios";
 
-export const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api"
+export const BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
 
 const api = axios.create({
-    baseURL: BASE_URL,
-    withCredentials: true
+  baseURL: BASE_URL,
+  withCredentials: true,
 });
 
 let isRefreshing = false;
+let refreshFailed = false;
 
-api.interceptors.response.use((reponse) => reponse, async (error) => {
+api.interceptors.response.use(
+  (reponse) => reponse,
+  async (error) => {
     const ogRequest = error.config;
-    if(error.response?.status === 401 && !ogRequest._retry){
-        ogRequest._retry = true;
-        try{
-            if(!isRefreshing){
-                isRefreshing = true;
-                await axios.post(`${BASE_URL}/auth/refreshAccessToken`, {}, {withCredentials: true})
-                .finally(() => {
-                    isRefreshing = false;
-                })
-            }
-            return api(ogRequest);
-        }catch{
-                await axios.post(
-                `${BASE_URL}/auth/logout`,
-                {},
-                { withCredentials: true }
-                );
-            window.location.replace("/signin");
-            return Promise.reject(error);
+    if (error.response?.status === 401 && !ogRequest._retry) {
+      if (refreshFailed) {
+        window.location.replace("/signin");
+        return Promise.reject(error);
+      }
+      ogRequest._retry = true;
+      try {
+        if (!isRefreshing) {
+          isRefreshing = true;
+          await axios
+            .post(
+              `${BASE_URL}/auth/refreshAccessToken`,
+              {},
+              { withCredentials: true },
+            )
+            .finally(() => {
+              isRefreshing = false;
+            });
         }
+        return api(ogRequest);
+      } catch {
+        refreshFailed = true;
+        isRefreshing = false;
+        await axios.post(
+          `${BASE_URL}/auth/logout`,
+          {},
+          { withCredentials: true },
+        );
+        window.location.replace("/signin");
+        return Promise.reject(error);
+      }
     }
     return Promise.reject(error);
-});
+  },
+);
 
 export default api;
