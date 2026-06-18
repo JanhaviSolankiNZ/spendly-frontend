@@ -281,7 +281,7 @@ const DashboardPage = () => {
               variant="outline"
               size="sm"
               className="w-full border-border text-secondary cursor-pointer"
-              onClick={() => navigate("/income/add")}
+              onClick={() => navigate("/incomes")}
               aria-label="Add income"
             >
               + Add income
